@@ -1,0 +1,13 @@
+C:\Users\marcf\source\repos\LatencyMap\Logic\bin\Release\Logic.dll
+C:\Users\marcf\source\repos\LatencyMap\Logic\bin\Release\Logic.pdb
+C:\Users\marcf\source\repos\LatencyMap\Logic\bin\Release\System.Reactive.Core.dll
+C:\Users\marcf\source\repos\LatencyMap\Logic\bin\Release\System.Reactive.Interfaces.dll
+C:\Users\marcf\source\repos\LatencyMap\Logic\bin\Release\System.Reactive.Linq.dll
+C:\Users\marcf\source\repos\LatencyMap\Logic\bin\Release\System.Reactive.PlatformServices.dll
+C:\Users\marcf\source\repos\LatencyMap\Logic\bin\Release\System.Reactive.Core.xml
+C:\Users\marcf\source\repos\LatencyMap\Logic\bin\Release\System.Reactive.Interfaces.xml
+C:\Users\marcf\source\repos\LatencyMap\Logic\bin\Release\System.Reactive.Linq.xml
+C:\Users\marcf\source\repos\LatencyMap\Logic\bin\Release\System.Reactive.PlatformServices.xml
+C:\Users\marcf\source\repos\LatencyMap\Logic\obj\Release\Logic.csproj.CoreCompileInputs.cache
+C:\Users\marcf\source\repos\LatencyMap\Logic\obj\Release\Logic.dll
+C:\Users\marcf\source\repos\LatencyMap\Logic\obj\Release\Logic.pdb

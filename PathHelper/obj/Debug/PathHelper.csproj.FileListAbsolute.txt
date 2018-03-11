@@ -1,0 +1,15 @@
+C:\Users\marcf\source\repos\GitHub\TravellingSalesmanProblem\PathHelper\bin\Debug\PathHelper.dll.config
+C:\Users\marcf\source\repos\GitHub\TravellingSalesmanProblem\PathHelper\bin\Debug\PathHelper.dll
+C:\Users\marcf\source\repos\GitHub\TravellingSalesmanProblem\PathHelper\bin\Debug\PathHelper.pdb
+C:\Users\marcf\source\repos\GitHub\TravellingSalesmanProblem\PathHelper\bin\Debug\Combinatorics.dll
+C:\Users\marcf\source\repos\GitHub\TravellingSalesmanProblem\PathHelper\bin\Debug\MathNet.Numerics.dll
+C:\Users\marcf\source\repos\GitHub\TravellingSalesmanProblem\PathHelper\bin\Debug\System.Reactive.Linq.dll
+C:\Users\marcf\source\repos\GitHub\TravellingSalesmanProblem\PathHelper\bin\Debug\System.Reactive.Interfaces.dll
+C:\Users\marcf\source\repos\GitHub\TravellingSalesmanProblem\PathHelper\bin\Debug\System.Reactive.Core.dll
+C:\Users\marcf\source\repos\GitHub\TravellingSalesmanProblem\PathHelper\bin\Debug\Combinatorics.pdb
+C:\Users\marcf\source\repos\GitHub\TravellingSalesmanProblem\PathHelper\bin\Debug\Combinatorics.dll.config
+C:\Users\marcf\source\repos\GitHub\TravellingSalesmanProblem\PathHelper\bin\Debug\MathNet.Numerics.xml
+C:\Users\marcf\source\repos\GitHub\TravellingSalesmanProblem\PathHelper\obj\Debug\PathHelper.csprojResolveAssemblyReference.cache
+C:\Users\marcf\source\repos\GitHub\TravellingSalesmanProblem\PathHelper\obj\Debug\PathHelper.csproj.CoreCompileInputs.cache
+C:\Users\marcf\source\repos\GitHub\TravellingSalesmanProblem\PathHelper\obj\Debug\PathHelper.dll
+C:\Users\marcf\source\repos\GitHub\TravellingSalesmanProblem\PathHelper\obj\Debug\PathHelper.pdb
