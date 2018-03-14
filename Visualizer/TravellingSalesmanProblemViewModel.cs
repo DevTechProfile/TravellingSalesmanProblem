@@ -74,7 +74,7 @@ namespace Visualizer
         {
             Info = "Optimizer started...";
 
-            ITspOptimizer optimizer = new RandomOptimizer(_shuffledTour, _euclideanPath);
+            ITspOptimizer optimizer = TspOptimizerFactory.Create(TspOptimizerAlgorithm.RandomOptimizer, _shuffledTour, _euclideanPath);
             optimizer.OptimalSequence.Subscribe(PlotTour);
 
             _tokenSource = new CancellationTokenSource();
