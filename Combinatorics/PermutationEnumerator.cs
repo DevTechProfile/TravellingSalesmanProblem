@@ -3,7 +3,7 @@
 namespace Combinatorics
 {
     /// <summary>
-    /// Permutationen ohne Wiederholungen
+    /// Permutations without repetition
     /// </summary>
     public class PermutationEnumerator<T> : EnumeratorBase<T>
     {
@@ -32,7 +32,8 @@ namespace Combinatorics
             {
                 _p[_i]--;
 
-                _j = _i % 2 * _p[_i];   // IF i is odd then j = p[i] otherwise j = 0
+                // if i is odd then j = p[i] otherwise j = 0
+                _j = _i % 2 * _p[_i];
                 var tmp = CurrentPermutation.Elements[_j];
                 CurrentPermutation.Elements[_j] = CurrentPermutation.Elements[_i];
                 CurrentPermutation.Elements[_i] = tmp;
