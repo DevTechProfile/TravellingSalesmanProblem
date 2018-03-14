@@ -23,6 +23,18 @@ namespace Visualizer
         private EuclideanPath _euclideanPath;
         private string _info;
         private CancellationTokenSource _tokenSource;
+        private TspOptimizerAlgorithm _selectedOptimizer;
+
+        public IEnumerable<TspOptimizerAlgorithm> OptimizerSet
+        {
+            get { return Enum.GetValues(typeof(TspOptimizerAlgorithm)).Cast<TspOptimizerAlgorithm>(); }
+        }
+
+        public TspOptimizerAlgorithm SelectedOptimizer
+        {
+            get { return _selectedOptimizer; }
+            set { _selectedOptimizer = value; RaisePropertyChanged(); }
+        }
 
         public List<Point> CurrentPath
         {
@@ -58,6 +70,8 @@ namespace Visualizer
             _euclideanPath = new EuclideanPath(_initialPath);
             _shuffledTour = Enumerable.Range(0, _initialPath.Count).ToArray();
 
+            SelectedOptimizer = TspOptimizerAlgorithm.RandomOptimizer;
+
             PlotTour(Enumerable.Range(0, _initialPath.Count).ToArray());
         }
 
@@ -74,7 +88,14 @@ namespace Visualizer
         {
             Info = "Optimizer started...";
 
-            ITspOptimizer optimizer = TspOptimizerFactory.Create(TspOptimizerAlgorithm.RandomOptimizer, _shuffledTour, _euclideanPath);
+            ITspOptimizer optimizer = TspOptimizerFactory.Create(SelectedOptimizer, _shuffledTour, _euclideanPath);
+
+            if (optimizer == null)
+            {
+                Info = "Algorithm not yet implemented :-(";
+                return;
+            }
+
             optimizer.OptimalSequence.Subscribe(PlotTour);
 
             _tokenSource = new CancellationTokenSource();
