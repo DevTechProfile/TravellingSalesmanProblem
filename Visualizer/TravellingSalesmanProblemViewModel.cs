@@ -86,8 +86,6 @@ namespace Visualizer
 
         private void OnAlgorithmStart()
         {
-            Info = "Optimizer started...";
-
             ITspOptimizer optimizer = TspOptimizerFactory.Create(SelectedOptimizer, _shuffledTour, _euclideanPath);
 
             if (optimizer == null)
@@ -103,6 +101,7 @@ namespace Visualizer
 
             var context = TaskScheduler.FromCurrentSynchronizationContext();
 
+            Info = "Optimizer started...";
             Task task = Task.Factory.StartNew(() =>
             {
                 optimizer.Start(token);
