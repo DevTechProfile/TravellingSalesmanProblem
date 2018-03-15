@@ -1,34 +1,26 @@
-﻿using Combinatorics;
-using MathNet.Numerics.LinearAlgebra;
-using System;
+﻿using System;
+using System.Windows;
 
 namespace PathHelper
 {
     public class PathGenerator
     {
-        public static EuclideanPath GetCirclePath(double angleStep, double radius)
+        public static Coordinate[] GetCirclePath(Size size, int numberOfPoints)
         {
-            int numbeOfPoints = (int)Math.Round(360d / angleStep, 0);
-
-            Vector<double>[] points = new Vector<double>[numbeOfPoints];
+            double radius = size.Width / 2;
+            var path = new Coordinate[numberOfPoints];
 
             int count = 0;
-            for (double i = 0; i < 2 * Math.PI; i += 2d * Math.PI / numbeOfPoints)
+            for (double i = 0; i < 2 * Math.PI; i += 2d * Math.PI / numberOfPoints)
             {
-                var currentCoordinates = new double[]
-                {
-                    Math.Cos(i),
-                    Math.Sin(i)
-                };
-
-                points[count] = radius * Vector<double>.Build.Dense(currentCoordinates);
+                path[count] = radius * new Coordinate(Math.Cos(i), Math.Sin(i));
                 count++;
 
-                if (count >= numbeOfPoints)
+                if (count >= numberOfPoints)
                     break;
             }
 
-            return new EuclideanPath(points);
+            return path;
         }
     }
 }

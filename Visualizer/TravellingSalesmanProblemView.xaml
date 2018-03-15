@@ -16,8 +16,11 @@
             <RowDefinition Height="1*" />
             <RowDefinition Height="60" />
         </Grid.RowDefinitions>
-        <Label Width="200" HorizontalAlignment="Left" FontSize="12" Content="{Binding Path=Info}" Grid.Row="0"></Label>
-        <ComboBox Height="25" HorizontalAlignment="Center" ItemsSource="{Binding OptimizerSet}" SelectedItem="{Binding SelectedOptimizer}"></ComboBox>
+        <Label Width="220" HorizontalAlignment="Left" FontSize="12" Content="{Binding Path=Info}" Grid.Row="0"></Label>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <ComboBox Height="25" HorizontalAlignment="Center" ItemsSource="{Binding OptimizerSet}" SelectedItem="{Binding SelectedOptimizer}"></ComboBox>
+            <ComboBox local:SelectionChangedBehaviour.Command="{Binding PathTypeChangedCommand}" Margin="30 0 0 0" Height="25" HorizontalAlignment="Center" ItemsSource="{Binding PathTypeSet}" SelectedItem="{Binding SelectedPathType}"></ComboBox>
+        </StackPanel>
         <oxy:Plot Title="{Binding PlotTitle}" Grid.Row="1">
             <oxy:LineSeries ItemsSource="{Binding Path=CurrentPath}" DataFieldX="X" DataFieldY="Y" />
         </oxy:Plot>

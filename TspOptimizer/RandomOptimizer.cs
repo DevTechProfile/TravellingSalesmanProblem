@@ -30,6 +30,7 @@ namespace TspOptimizer
 
             while (!token.IsCancellationRequested)
             {
+                // Forcing delay for visualization
                 Thread.Sleep(1);
 
                 int cp1, cp2;
