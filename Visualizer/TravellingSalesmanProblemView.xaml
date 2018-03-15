@@ -6,7 +6,7 @@
         xmlns:oxy="clr-namespace:OxyPlot.Wpf;assembly=OxyPlot.Wpf"
         xmlns:local="clr-namespace:Visualizer"
         mc:Ignorable="d"
-        Title="TSP" Height="350" Width="525">
+        Title="TSP" Height="800" Width="800">
     <Window.DataContext>
         <local:TravellingSalesmanProblemViewModel/>
     </Window.DataContext>

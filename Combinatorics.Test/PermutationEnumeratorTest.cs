@@ -12,7 +12,7 @@ namespace Combinatorics.Test
         [DataRow(8)]
         [DataRow(10)]
         [DataTestMethod]
-        public void EnumeratePermuations_CorrectCount(int elementCount)
+        public void EnumeratePermutations_CorrectCount(int elementCount)
         {
             var elements = Enumerable.Range(0, elementCount).ToArray();
             var representation = new GeneralRepresentation<int>(elements, elementCount, elementCount);
