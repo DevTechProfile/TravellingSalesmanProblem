@@ -25,6 +25,7 @@ namespace Combinatorics.Test
                 actualCount++;
             }
 
+            // Would be very nice to have vectorization like prod(1:n)
             Assert.AreEqual(Enumerable.Range(1, elementCount).Aggregate(1, (acc, val) => acc * val), actualCount);
         }
     }
