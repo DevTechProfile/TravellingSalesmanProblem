@@ -2,27 +2,18 @@
 using System;
 using System.Linq;
 using System.Reactive.Linq;
-using System.Reactive.Subjects;
 using System.Threading;
 
 namespace TspOptimizer
 {
-    public class RandomOptimizer : ITspOptimizer
+    public class RandomOptimizer : TspOptimizerBase
     {
-        private int[] _startPermutation;
-        private Subject<int[]> _optimalSequence;
-        private EuclideanPath _euclideanPath;
-
         public RandomOptimizer(int[] startPermutation, EuclideanPath euclideanPath)
+            : base(startPermutation, euclideanPath)
         {
-            _startPermutation = startPermutation;
-            _euclideanPath = euclideanPath;
-            _optimalSequence = new Subject<int[]>();
         }
 
-        IObservable<int[]> ITspOptimizer.OptimalSequence => _optimalSequence.AsObservable();
-
-        public void Start(CancellationToken token)
+        public override void Start(CancellationToken token)
         {
             Random rand = new Random();
             double min = double.MaxValue;
@@ -48,7 +39,7 @@ namespace TspOptimizer
                 if (curMin < min)
                 {
                     min = curMin;
-                    _optimalSequence.OnNext(curPermutation.ToArray());           
+                    _optimalSequence.OnNext(curPermutation.ToArray());
                 }
                 else
                 {

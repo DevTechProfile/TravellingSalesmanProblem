@@ -22,6 +22,7 @@ namespace TspOptimizer
                     tspOptimizer = new RandomOptimizer(startSequence, euclideanPath);
                     break;
                 case TspOptimizerAlgorithm.LocalSearchOptimizer:
+                    tspOptimizer = new LocalSearchOptimizer(startSequence, euclideanPath);
                     break;
                 case TspOptimizerAlgorithm.BruteForceOptimizer:
                     break;

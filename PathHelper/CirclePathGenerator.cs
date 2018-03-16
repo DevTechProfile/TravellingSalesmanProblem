@@ -3,7 +3,7 @@ using System.Windows;
 
 namespace PathHelper
 {
-    public class PathGenerator
+    public class CirclePathGenerator
     {
         public static Coordinate[] GetCirclePath(Size size, int numberOfPoints)
         {

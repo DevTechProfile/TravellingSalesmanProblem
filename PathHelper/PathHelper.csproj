@@ -51,7 +51,7 @@
   <ItemGroup>
     <Compile Include="Coordinate.cs" />
     <Compile Include="EPathType.cs" />
-    <Compile Include="PathGenerator.cs" />
+    <Compile Include="CirclePathGenerator.cs" />
     <Compile Include="PathGeneratorFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

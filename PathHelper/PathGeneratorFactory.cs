@@ -19,7 +19,7 @@ namespace PathHelper
                 case TspPathType.Normal3DRandom:
                     break;
                 case TspPathType.Ciclre:
-                    path = PathGenerator.GetCirclePath(size, numberOfPoints);
+                    path = CirclePathGenerator.GetCirclePath(size, numberOfPoints);
                     break;
                 default:
                     throw new ArgumentException("Unknown path type");
