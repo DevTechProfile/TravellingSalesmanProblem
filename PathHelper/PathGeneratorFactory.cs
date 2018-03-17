@@ -16,6 +16,8 @@ namespace PathHelper
                     path = generator.GetPath(size, numberOfPoints);
                     break;
                 case TspPathType.Normal2DRandom:
+                    generator = new Normal2DRandomPathGenerator();
+                    path = generator.GetPath(size, numberOfPoints);
                     break;
                 case TspPathType.Uniform3DRandom:
                     break;

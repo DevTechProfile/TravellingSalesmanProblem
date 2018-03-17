@@ -51,7 +51,14 @@ namespace TspOptimizer
             _optimalSequence.OnCompleted();
         }
 
-        private int[] TwoOptSwap(int[] sequence, int posA, int posB)
+        /// <summary>
+        /// https://en.wikipedia.org/wiki/2-opt
+        /// </summary>
+        /// <param name="sequence"></param>
+        /// <param name="i"></param>
+        /// <param name="k"></param>
+        /// <returns></returns>
+        private int[] TwoOptSwap(int[] sequence, int i, int k)
         {
             int[] nextSequence = new int[sequence.Length];
 
@@ -59,7 +66,7 @@ namespace TspOptimizer
             // 2. take sequence[posA] to sequence[posB] and add them in reverse order to nextSequence
             // 3. take sequence[posB+1] to end and add them in order to nextSequence
             Array.Copy(sequence, nextSequence, sequence.Length);
-            Array.Reverse(nextSequence, posA, posB - posA + 1);
+            Array.Reverse(nextSequence, i, k - i + 1);
 
             return nextSequence;
         }
