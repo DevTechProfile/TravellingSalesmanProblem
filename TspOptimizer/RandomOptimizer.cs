@@ -13,10 +13,10 @@ namespace TspOptimizer
         {
         }
 
-        public override void Start(CancellationToken token)
+        public override void Start(CancellationToken token, Action<double> action)
         {
             Random rand = new Random();
-            double min = double.MaxValue;
+            double minPathLength = double.MaxValue;
             var curPermutation = _startPermutation.ToArray();
 
             while (!token.IsCancellationRequested)
@@ -36,9 +36,10 @@ namespace TspOptimizer
 
                 double curMin = _euclideanPath.GetCurrentPathLength(curPermutation, true);
 
-                if (curMin < min)
+                if (curMin < minPathLength)
                 {
-                    min = curMin;
+                    minPathLength = curMin;
+                    action?.Invoke(minPathLength);
                     _optimalSequence.OnNext(curPermutation.ToArray());
                 }
                 else

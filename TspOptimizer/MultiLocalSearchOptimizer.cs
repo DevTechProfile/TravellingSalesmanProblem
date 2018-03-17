@@ -29,28 +29,26 @@ namespace TspOptimizer
                 Helper.Shuffle(shuffledSequence);
 
                 _optimizerSet[i] = new LocalSearchOptimizer(shuffledSequence, _euclideanPath);
-                _optimizerSet[i].OptimalSequence.Subscribe(ObserveGlobalOptimum);
             }
         }
 
-        public override void Start(CancellationToken token)
+        public override void Start(CancellationToken token, Action<double> action)
         {
-            if (_optimizerSet == null)
+            Array.ForEach(_optimizerSet, optimizer =>
             {
-                throw new InvalidOperationException("No optimizer set defined.");
-            }
-
+                optimizer.OptimalSequence.Subscribe(sequence => ObserveGlobalOptimum(sequence, action));
+            });
             List<Task> tasks = new List<Task>(_optimizerSet.Length);
 
             foreach (var optimizer in _optimizerSet)
             {
-                tasks.Add(Task.Factory.StartNew(() => optimizer.Start(token)));
+                tasks.Add(Task.Factory.StartNew(() => optimizer.Start(token, null)));
             }
 
             tasks.ForEach(task => task.Wait());
         }
 
-        private void ObserveGlobalOptimum(int[] sequence)
+        private void ObserveGlobalOptimum(int[] sequence, Action<double> action)
         {
             var currentPathLengh = _euclideanPath.GetCurrentPathLength(sequence, true);
 
@@ -58,6 +56,7 @@ namespace TspOptimizer
             {
                 // Should be locked? 
                 _globalMinimum = currentPathLengh;
+                action?.Invoke(_globalMinimum);
                 _optimalSequence.OnNext(sequence);
             }
         }

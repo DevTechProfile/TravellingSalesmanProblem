@@ -3,9 +3,9 @@ using System.Windows;
 
 namespace PathHelper
 {
-    public class CirclePathGenerator
+    public class CirclePathGenerator : IPathGenerator
     {
-        public static Coordinate[] GetCirclePath(Size size, int numberOfPoints)
+        public Coordinate[] GetPath(Size size, int numberOfPoints)
         {
             double radius = size.Width / 2;
             var path = new Coordinate[numberOfPoints];

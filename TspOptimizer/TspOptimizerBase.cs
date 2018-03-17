@@ -21,6 +21,6 @@ namespace TspOptimizer
 
         IObservable<int[]> ITspOptimizer.OptimalSequence => _optimalSequence.AsObservable();
 
-        public abstract void Start(CancellationToken token);
+        public abstract void Start(CancellationToken token, Action<double> action);
     }
 }

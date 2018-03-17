@@ -6,6 +6,6 @@ namespace TspOptimizer
     public interface ITspOptimizer
     {
         IObservable<int[]> OptimalSequence { get; }
-        void Start(CancellationToken token);
+        void Start(CancellationToken token, Action<double> action);
     }
 }

@@ -21,12 +21,21 @@
             <ComboBox Height="25" HorizontalAlignment="Center" ItemsSource="{Binding OptimizerSet}" SelectedItem="{Binding SelectedOptimizer}"></ComboBox>
             <ComboBox local:SelectionChangedBehaviour.Command="{Binding PathTypeChangedCommand}" Margin="30 0 0 0" Height="25" HorizontalAlignment="Center" ItemsSource="{Binding PathTypeSet}" SelectedItem="{Binding SelectedPathType}"></ComboBox>
         </StackPanel>
+        <Label Width="150" HorizontalAlignment="Right" FontSize="12" Content="{Binding Path=PathLength}" Grid.Row="0"></Label>
         <oxy:Plot Title="{Binding PlotTitle}" Grid.Row="1">
             <oxy:LineSeries ItemsSource="{Binding Path=CurrentPath}" DataFieldX="X" DataFieldY="Y" />
         </oxy:Plot>
         <Grid Grid.Row="2">
             <Button Margin="20 0 0 0" Width="80" Height="40" HorizontalAlignment="Left" Content="Start" Command="{Binding StartPathOptimizationCommand}" />
             <Button Margin="120 0 0 0" Width="80" Height="40" HorizontalAlignment="Left" Content="Stop" Command="{Binding StopPathOptimizationCommand}" />
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Label VerticalAlignment="Center" FontSize="12" Content="Number of points:" Margin="0,15,0,19"/>
+                <TextBox AcceptsReturn="False" Margin="5,20,0,20" FontSize="12" Width="60" Height="20" VerticalAlignment="Center" Text="{Binding NumberOfPoints, UpdateSourceTrigger=PropertyChanged}">
+                    <TextBox.InputBindings>
+                        <KeyBinding Key="Enter" Command="{Binding PathTypeChangedCommand}" />
+                    </TextBox.InputBindings>
+                </TextBox>
+            </StackPanel>
             <Button Margin="0 0 20 0" Width="80" Height="40" HorizontalAlignment="Right" Content="Shuffle" Command="{Binding ShufflePathCommand}" />
         </Grid>
     </Grid>

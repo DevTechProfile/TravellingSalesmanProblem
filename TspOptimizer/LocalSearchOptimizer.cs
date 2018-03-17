@@ -1,4 +1,5 @@
 ﻿using Combinatorics;
+using System;
 using System.Linq;
 using System.Threading;
 
@@ -11,7 +12,7 @@ namespace TspOptimizer
         {
         }
 
-        public override void Start(CancellationToken token)
+        public override void Start(CancellationToken token, Action<double> action)
         {
             double minPathLength = double.MaxValue;
             int[] minSequence = null;
@@ -37,6 +38,7 @@ namespace TspOptimizer
                     if (currentPathLength < minPathLength)
                     {
                         minPathLength = currentPathLength;
+                        action?.Invoke(minPathLength);
                         minSequence = currentSequence.ToArray();
                         _optimalSequence.OnNext(minSequence);
 
@@ -49,7 +51,7 @@ namespace TspOptimizer
                     }
                 } while (indexEnumerator.SetNext());
 
-                // Continue on new ring starting from minimum on ancestor ring
+                // Continue on new ring starting from minimum path length of ancestor ring
                 representation = new GeneralRepresentation(_startPermutation.Length, selected);
                 indexEnumerator = new IndexEnumerator(representation);
             }

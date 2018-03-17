@@ -16,6 +16,8 @@ namespace Visualizer
 {
     public class TravellingSalesmanProblemViewModel : BindableBase
     {
+        const string _intialNumberOfPointsString = "36";
+
         private List<Point> _currentPath;
         private List<Point> _initialPath;
         private string _plotTitle;
@@ -25,6 +27,8 @@ namespace Visualizer
         private CancellationTokenSource _tokenSource;
         private TspOptimizerAlgorithm _selectedOptimizer;
         private TspPathType _selectedPathType;
+        private string _pathLength;
+        private string _numberOfPoints;
 
         public IEnumerable<TspOptimizerAlgorithm> OptimizerSet
         {
@@ -66,6 +70,23 @@ namespace Visualizer
             set { _info = value; RaisePropertyChanged(); }
         }
 
+        public string PathLength
+        {
+            get { return _pathLength; }
+            set { _pathLength = value; RaisePropertyChanged(); }
+        }
+
+        public string NumberOfPoints
+        {
+            get { return _numberOfPoints; }
+            set
+            {
+                _numberOfPoints = value;
+                RaisePropertyChanged();
+            }
+        }
+
+
         public ICommand StartPathOptimizationCommand { get; }
 
         public ICommand StopPathOptimizationCommand { get; }
@@ -83,11 +104,13 @@ namespace Visualizer
 
             SelectedPathType = TspPathType.Ciclre;
             SelectedOptimizer = TspOptimizerAlgorithm.RandomOptimizer;
+            NumberOfPoints = _intialNumberOfPointsString;
         }
 
         private void OnPathTypeChanged()
         {
-            var path = PathGeneratorFactory.Create(SelectedPathType, new Size(10, 10), 36);
+            int numberOfPoints = VerifyInput();
+            var path = PathGeneratorFactory.Create(SelectedPathType, new Size(10, 10), numberOfPoints);
 
             if (path == null)
             {
@@ -100,6 +123,28 @@ namespace Visualizer
             _shuffledTour = Enumerable.Range(0, _initialPath.Count).ToArray();
 
             PlotTour(Enumerable.Range(0, _initialPath.Count).ToArray());
+        }
+
+        private int VerifyInput()
+        {
+            int numberOfPoints = Convert.ToInt32(_intialNumberOfPointsString);
+
+            if (string.IsNullOrWhiteSpace(NumberOfPoints))
+            {
+                return numberOfPoints;
+            }
+
+            try
+            {
+                numberOfPoints = Convert.ToInt32(NumberOfPoints);
+            }
+            catch (Exception)
+            {
+                NumberOfPoints = _intialNumberOfPointsString;
+                return numberOfPoints;
+            }
+
+            return numberOfPoints;
         }
 
         private void OnAlgorithmStop() => _tokenSource?.Cancel();
@@ -131,7 +176,7 @@ namespace Visualizer
             Info = "Optimizer started...";
             Task task = Task.Factory.StartNew(() =>
             {
-                optimizer.Start(token);
+                optimizer.Start(token, UpdatePathLength);
             }, token).ContinueWith((t) =>
             {
                 Info = "Optimizer canceled...";
@@ -141,6 +186,11 @@ namespace Visualizer
         private void PlotTour(int[] tour)
         {
             CurrentPath = new List<Point>(tour.Select(i => _initialPath[i]));
+        }
+
+        private void UpdatePathLength(double pathLength)
+        {
+            PathLength = "Path length: " + Math.Round(pathLength, 2).ToString() + " LU";
         }
     }
 }
