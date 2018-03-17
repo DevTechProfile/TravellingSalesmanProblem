@@ -87,7 +87,7 @@ namespace Visualizer
 
         private void OnPathTypeChanged()
         {
-            var path = PathGeneratorFactory.Create(SelectedPathType, new Size(10, 10), 18);
+            var path = PathGeneratorFactory.Create(SelectedPathType, new Size(10, 10), 36);
 
             if (path == null)
             {
@@ -102,7 +102,7 @@ namespace Visualizer
             PlotTour(Enumerable.Range(0, _initialPath.Count).ToArray());
         }
 
-        private void OnAlgorithmStop() => _tokenSource.Cancel();
+        private void OnAlgorithmStop() => _tokenSource?.Cancel();
 
         private void OnShufflePath()
         {

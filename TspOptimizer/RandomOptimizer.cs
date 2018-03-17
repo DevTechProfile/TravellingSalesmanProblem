@@ -46,6 +46,8 @@ namespace TspOptimizer
                     Helper.SwapPositions(curPermutation, new int[] { cp1, cp2 });
                 }
             }
+
+            _optimalSequence.OnCompleted();
         }
     }
 }

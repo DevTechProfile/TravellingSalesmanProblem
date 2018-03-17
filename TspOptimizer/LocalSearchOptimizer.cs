@@ -17,20 +17,20 @@ namespace TspOptimizer
             int[] minSequence = null;
             const int selected = 2;
 
-            GeneralRepresentation presentation = new GeneralRepresentation(_startPermutation.Length, selected);
-            IndexEnumerator indexEnumerator = new IndexEnumerator(presentation);
+            GeneralRepresentation representation = new GeneralRepresentation(_startPermutation.Length, selected);
+            IndexEnumerator indexEnumerator = new IndexEnumerator(representation);
 
             int[] currentSequence = null;
             currentSequence = _startPermutation.ToArray();
 
             while (!token.IsCancellationRequested)
             {
-                // Forcing delay for visualization
-                Thread.Sleep(100);
-
                 // One local ring
                 do
-                {                    
+                {
+                    //Force delay
+                    Thread.Sleep(1);
+
                     Helper.SwapPositions(currentSequence, indexEnumerator.CurrentCombination.Elements);
                     var currentPathLength = _euclideanPath.GetCurrentPathLength(currentSequence, true);
 
@@ -39,18 +39,22 @@ namespace TspOptimizer
                         minPathLength = currentPathLength;
                         minSequence = currentSequence.ToArray();
                         _optimalSequence.OnNext(minSequence);
+
+                        // Stop on first optimum, something like greedy strategy
+                        break;
                     }
                     else
                     {
                         Helper.SwapPositions(currentSequence, indexEnumerator.CurrentCombination.Elements);
                     }
-                } while (indexEnumerator.SetNext());            
+                } while (indexEnumerator.SetNext());
 
-                // Continue on new ring starting from miniumn on ancestor ring
-                currentSequence = minSequence.ToArray();
-                presentation = new GeneralRepresentation(_startPermutation.Length, selected);
-                indexEnumerator = new IndexEnumerator(presentation);
+                // Continue on new ring starting from minimum on ancestor ring
+                representation = new GeneralRepresentation(_startPermutation.Length, selected);
+                indexEnumerator = new IndexEnumerator(representation);
             }
+
+            _optimalSequence.OnCompleted();
         }
     }
 }

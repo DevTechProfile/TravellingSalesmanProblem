@@ -24,6 +24,9 @@ namespace TspOptimizer
                 case TspOptimizerAlgorithm.LocalSearchOptimizer:
                     tspOptimizer = new LocalSearchOptimizer(startSequence, euclideanPath);
                     break;
+                case TspOptimizerAlgorithm.MultiLocalSearchOptimizer:
+                    tspOptimizer = new MultiLocalSearchOptimizer(startSequence, euclideanPath);
+                    break;
                 case TspOptimizerAlgorithm.BruteForceOptimizer:
                     break;
                 case TspOptimizerAlgorithm.BranchAndBoundOptimizer:

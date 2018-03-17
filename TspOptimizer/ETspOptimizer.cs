@@ -4,6 +4,7 @@
     {
         RandomOptimizer,
         LocalSearchOptimizer,
+        MultiLocalSearchOptimizer,
         BruteForceOptimizer,
         BranchAndBoundOptimizer,
         SimulatedAnnealingOptimizer,
