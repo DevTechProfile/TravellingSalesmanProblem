@@ -17,7 +17,7 @@ namespace TspOptimizer
         {
             Random rand = new Random();
             double minPathLength = double.MaxValue;
-            var curPermutation = _startPermutation.ToArray();
+            var currentSequence = _startPermutation.ToArray();
 
             while (!token.IsCancellationRequested)
             {
@@ -28,23 +28,24 @@ namespace TspOptimizer
 
                 do
                 {
-                    cp1 = rand.Next(curPermutation.Length);
-                    cp2 = rand.Next(curPermutation.Length);
+                    cp1 = rand.Next(currentSequence.Length);
+                    cp2 = rand.Next(currentSequence.Length);
                 } while (cp1 == cp2);
 
-                Helper.SwapPositions(curPermutation, new int[] { cp1, cp2 });
+                var swaps = new int[] { cp1, cp2 };
+                Helper.SwapPositions(currentSequence, swaps);
 
-                double curMin = _euclideanPath.GetCurrentPathLength(curPermutation, true);
+                double curMin = _euclideanPath.GetCurrentPathLength(currentSequence, true);
 
                 if (curMin < minPathLength)
                 {
                     minPathLength = curMin;
                     action?.Invoke(minPathLength);
-                    _optimalSequence.OnNext(curPermutation.ToArray());
+                    _optimalSequence.OnNext(currentSequence.ToArray());
                 }
                 else
                 {
-                    Helper.SwapPositions(curPermutation, new int[] { cp1, cp2 });
+                    Helper.SwapPositions(currentSequence, swaps);
                 }
             }
 

@@ -21,8 +21,7 @@ namespace TspOptimizer
             GeneralRepresentation representation = new GeneralRepresentation(_startPermutation.Length, selected);
             IndexEnumerator indexEnumerator = new IndexEnumerator(representation);
 
-            int[] currentSequence = null;
-            currentSequence = _startPermutation.ToArray();
+            int[] currentSequence = _startPermutation.ToArray();
 
             while (!token.IsCancellationRequested)
             {
