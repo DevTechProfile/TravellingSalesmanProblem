@@ -56,24 +56,10 @@ namespace TspOptimizer
             int[] nextSequence = new int[sequence.Length];
 
             // 1. take sequence[0] to sequence[posA-1] and add them in order to nextSequence
-            for (int i = 0; i <= posA - 1; i++)
-            {
-                nextSequence[i] = sequence[i];
-            }
-
             // 2. take sequence[posA] to sequence[posB] and add them in reverse order to nextSequence
-            int dec = 0;
-            for (int i = posA; i <= posB; i++)
-            {
-                nextSequence[i] = sequence[posB - dec];
-                dec++;
-            }
-
             // 3. take sequence[posB+1] to end and add them in order to nextSequence
-            for (int i = posB + 1; i < sequence.Length; ++i)
-            {
-                nextSequence[i] = sequence[i];
-            }
+            Array.Copy(sequence, nextSequence, sequence.Length);
+            Array.Reverse(nextSequence, posA, posB - posA + 1);
 
             return nextSequence;
         }
