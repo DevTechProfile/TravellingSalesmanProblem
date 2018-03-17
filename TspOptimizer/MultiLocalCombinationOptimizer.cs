@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace TspOptimizer
 {
-    public class MultiLocalSearchOptimizer : TspOptimizerBase
+    public class MultiLocalCombinationOptimizer : TspOptimizerBase
     {
         ITspOptimizer[] _optimizerSet;
         double _globalMinimum;
 
-        public MultiLocalSearchOptimizer(int[] startPermutation, EuclideanPath euclideanPath)
+        public MultiLocalCombinationOptimizer(int[] startPermutation, EuclideanPath euclideanPath)
             : base(startPermutation, euclideanPath)
         {
             _globalMinimum = double.MaxValue;
@@ -28,7 +28,7 @@ namespace TspOptimizer
                 var shuffledSequence = _startPermutation.ToArray();
                 Helper.Shuffle(shuffledSequence);
 
-                _optimizerSet[i] = new LocalSearchOptimizer(shuffledSequence, _euclideanPath);
+                _optimizerSet[i] = new LocalCombinationOptimizer(shuffledSequence, _euclideanPath);
             }
         }
 
@@ -46,6 +46,8 @@ namespace TspOptimizer
             }
 
             tasks.ForEach(task => task.Wait());
+
+            _optimalSequence.OnCompleted();
         }
 
         private void ObserveGlobalOptimum(int[] sequence, Action<double> action)

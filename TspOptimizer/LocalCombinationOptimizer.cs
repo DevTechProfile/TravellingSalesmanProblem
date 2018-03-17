@@ -5,9 +5,9 @@ using System.Threading;
 
 namespace TspOptimizer
 {
-    public class LocalSearchOptimizer : TspOptimizerBase
+    public class LocalCombinationOptimizer : TspOptimizerBase
     {
-        public LocalSearchOptimizer(int[] startPermutation, EuclideanPath euclideanPath)
+        public LocalCombinationOptimizer(int[] startPermutation, EuclideanPath euclideanPath)
             : base(startPermutation, euclideanPath)
         {
         }
@@ -30,7 +30,7 @@ namespace TspOptimizer
                 do
                 {
                     //Force delay
-                    Thread.Sleep(1);
+                    //Thread.Sleep(1);
 
                     Helper.SwapPositions(currentSequence, indexEnumerator.CurrentCombination.Elements);
                     var currentPathLength = _euclideanPath.GetCurrentPathLength(currentSequence, true);

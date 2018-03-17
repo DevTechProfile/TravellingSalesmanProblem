@@ -65,8 +65,8 @@
   <ItemGroup>
     <Compile Include="ETspOptimizer.cs" />
     <Compile Include="ITspOptimizer.cs" />
-    <Compile Include="LocalSearchOptimizer.cs" />
-    <Compile Include="MultiLocalSearchOptimizer.cs" />
+    <Compile Include="LocalCombinationOptimizer.cs" />
+    <Compile Include="MultiLocalCombinationOptimizer.cs" />
     <Compile Include="TspOptimizerBase.cs" />
     <Compile Include="RandomOptimizer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -21,11 +21,11 @@ namespace TspOptimizer
                 case TspOptimizerAlgorithm.RandomOptimizer:
                     tspOptimizer = new RandomOptimizer(startSequence, euclideanPath);
                     break;
-                case TspOptimizerAlgorithm.LocalSearchOptimizer:
-                    tspOptimizer = new LocalSearchOptimizer(startSequence, euclideanPath);
+                case TspOptimizerAlgorithm.LocalCombinationOptimizer:
+                    tspOptimizer = new LocalCombinationOptimizer(startSequence, euclideanPath);
                     break;
-                case TspOptimizerAlgorithm.MultiLocalSearchOptimizer:
-                    tspOptimizer = new MultiLocalSearchOptimizer(startSequence, euclideanPath);
+                case TspOptimizerAlgorithm.MultiLocalCombinationOptimizer:
+                    tspOptimizer = new MultiLocalCombinationOptimizer(startSequence, euclideanPath);
                     break;
                 case TspOptimizerAlgorithm.BruteForceOptimizer:
                     break;

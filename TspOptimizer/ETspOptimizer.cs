@@ -3,13 +3,13 @@
     public enum TspOptimizerAlgorithm
     {
         RandomOptimizer,
-        LocalSearchOptimizer,
-        MultiLocalSearchOptimizer,
+        LocalCombinationOptimizer,
+        LocalkOptOptimizer,
+        MultiLocalCombinationOptimizer,
         BruteForceOptimizer,
         BranchAndBoundOptimizer,
         SimulatedAnnealingOptimizer,
         GeneticOptimizer,
         GridLocalBruteForceOptimizer
-
     }
 }
