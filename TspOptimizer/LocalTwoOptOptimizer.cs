@@ -2,12 +2,13 @@
 using System;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace TspOptimizer
 {
-    public class LocalkOptOptimizer : TspOptimizerBase
+    public class LocalTwoOptOptimizer : TspOptimizerBase
     {
-        public LocalkOptOptimizer(int[] startPermutation, EuclideanPath euclideanPath)
+        public LocalTwoOptOptimizer(int[] startPermutation, EuclideanPath euclideanPath)
             : base(startPermutation, euclideanPath)
         {
         }
@@ -18,14 +19,20 @@ namespace TspOptimizer
             double minPathLength = double.MaxValue;
             int[] currentSequence = _startPermutation.ToArray();
 
+            ParallelOptions parallelOptions = new ParallelOptions
+            {
+                CancellationToken = token,
+                MaxDegreeOfParallelism = Environment.ProcessorCount - 2
+            };
+
             while (!token.IsCancellationRequested)
             {
-                for (int i = 0; i < _startPermutation.Length - 1; i++)
+                Parallel.For(0, _startPermutation.Length - 1, parallelOptions, i =>
                 {
                     for (int k = i + 1; k < _startPermutation.Length; k++)
                     {
                         // Forcing delay for visualization
-                        Thread.Sleep(1);
+                        // Thread.Sleep(1);
 
                         var nextSequence = TwoOptSwap(currentSequence, i, k);
                         double curMin = _euclideanPath.GetCurrentPathLength(nextSequence, true);
@@ -38,7 +45,7 @@ namespace TspOptimizer
                             _optimalSequence.OnNext(currentSequence);
                         }
                     }
-                }
+                });
             }
 
             _optimalSequence.OnCompleted();

@@ -4,7 +4,7 @@
     {
         RandomOptimizer,
         LocalCombinationOptimizer,
-        LocalkOptOptimizer,
+        LocalTwoOptOptimizer,
         MultiLocalCombinationOptimizer,
         BruteForceOptimizer,
         BranchAndBoundOptimizer,
