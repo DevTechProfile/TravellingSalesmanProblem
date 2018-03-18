@@ -37,6 +37,7 @@ namespace TspOptimizer
                     tspOptimizer = new BranchAndBoundOptimizer(startSequence, euclideanPath);
                     break;
                 case TspOptimizerAlgorithm.SimulatedAnnealingOptimizer:
+                    tspOptimizer = new SimulatedAnnealingOptimizer(startSequence, euclideanPath);
                     break;
                 case TspOptimizerAlgorithm.GeneticOptimizer:
                     break;

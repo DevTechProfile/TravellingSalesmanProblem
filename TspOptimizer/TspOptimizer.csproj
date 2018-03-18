@@ -70,6 +70,7 @@
     <Compile Include="LocalCombinationOptimizer.cs" />
     <Compile Include="LocalTwoOptOptimizer.cs" />
     <Compile Include="MultiLocalCombinationOptimizer.cs" />
+    <Compile Include="SimulatedAnnealingOptimizer.cs" />
     <Compile Include="TspOptimizerBase.cs" />
     <Compile Include="RandomOptimizer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
