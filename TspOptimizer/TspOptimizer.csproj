@@ -63,6 +63,8 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BranchAndBoundOptimizer.cs" />
+    <Compile Include="BruteForceOptimizer.cs" />
     <Compile Include="ETspOptimizer.cs" />
     <Compile Include="ITspOptimizer.cs" />
     <Compile Include="LocalCombinationOptimizer.cs" />

@@ -31,8 +31,10 @@ namespace TspOptimizer
                     tspOptimizer = new LocalTwoOptOptimizer(startSequence, euclideanPath);
                     break;
                 case TspOptimizerAlgorithm.BruteForceOptimizer:
+                    tspOptimizer = new BruteForceOptimizer(startSequence, euclideanPath);
                     break;
                 case TspOptimizerAlgorithm.BranchAndBoundOptimizer:
+                    tspOptimizer = new BranchAndBoundOptimizer(startSequence, euclideanPath);
                     break;
                 case TspOptimizerAlgorithm.SimulatedAnnealingOptimizer:
                     break;

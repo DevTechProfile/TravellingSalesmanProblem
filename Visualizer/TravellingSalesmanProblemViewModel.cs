@@ -29,6 +29,7 @@ namespace Visualizer
         private TspPathType _selectedPathType;
         private string _pathLength;
         private string _numberOfPoints;
+        private bool _startButtonEnable;
 
         public IEnumerable<TspOptimizerAlgorithm> OptimizerSet
         {
@@ -84,6 +85,12 @@ namespace Visualizer
                 _numberOfPoints = value;
                 RaisePropertyChanged();
             }
+        }        
+
+        public bool StartButtonEnable
+        {
+            get { return _startButtonEnable; }
+            set { _startButtonEnable = value; RaisePropertyChanged(); }
         }
 
 
@@ -105,6 +112,7 @@ namespace Visualizer
             SelectedPathType = TspPathType.Ciclre;
             SelectedOptimizer = TspOptimizerAlgorithm.RandomOptimizer;
             NumberOfPoints = _intialNumberOfPointsString;
+            StartButtonEnable = true;
         }
 
         private void OnPathTypeChanged()
@@ -158,6 +166,7 @@ namespace Visualizer
 
         private void OnAlgorithmStart()
         {
+            StartButtonEnable = false;
             ITspOptimizer optimizer = TspOptimizerFactory.Create(SelectedOptimizer, _shuffledTour, _euclideanPath);
 
             if (optimizer == null)
@@ -180,6 +189,7 @@ namespace Visualizer
             }, token).ContinueWith((t) =>
             {
                 Info = "Optimizer canceled...";
+                StartButtonEnable = true;
             }, context);
         }
 

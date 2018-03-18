@@ -52,7 +52,7 @@ namespace Combinatorics
             return currentPathLength;
         }
 
-        public double GetCurrentSubPathLength(int[] currentSequence, int maxIndex, double minPath, bool closedPath)
+        public double GetCurrentSubPathLength(int[] currentSequence, int maxIndex)
         {
             double currentPathLength = 0d;
 

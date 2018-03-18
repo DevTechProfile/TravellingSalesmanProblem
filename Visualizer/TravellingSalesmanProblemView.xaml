@@ -26,7 +26,7 @@
             <oxy:LineSeries ItemsSource="{Binding Path=CurrentPath}" DataFieldX="X" DataFieldY="Y" />
         </oxy:Plot>
         <Grid Grid.Row="2">
-            <Button Margin="20 0 0 0" Width="80" Height="40" HorizontalAlignment="Left" Content="Start" Command="{Binding StartPathOptimizationCommand}" />
+            <Button IsEnabled="{Binding StartButtonEnable}" Margin="20 0 0 0" Width="80" Height="40" HorizontalAlignment="Left" Content="Start" Command="{Binding StartPathOptimizationCommand}" />
             <Button Margin="120 0 0 0" Width="80" Height="40" HorizontalAlignment="Left" Content="Stop" Command="{Binding StopPathOptimizationCommand}" />
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Label VerticalAlignment="Center" FontSize="12" Content="Number of points:" Margin="0,15,0,19"/>

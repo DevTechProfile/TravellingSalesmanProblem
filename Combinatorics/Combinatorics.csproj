@@ -75,7 +75,6 @@
     <Compile Include="EnumeratorBase.cs" />
     <Compile Include="EuclideanPath.cs" />
     <Compile Include="GeneralRepresentation.cs" />
-    <Compile Include="HamiltonPathBranchBound.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="IndexEnumerator.cs" />
     <Compile Include="IndexRepresentation.cs" />

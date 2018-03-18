@@ -8,9 +8,12 @@ namespace TspOptimizer
 {
     public class LocalTwoOptOptimizer : TspOptimizerBase
     {
+        public int[] OptimalSequence { get; private set; }
+
         public LocalTwoOptOptimizer(int[] startPermutation, EuclideanPath euclideanPath)
             : base(startPermutation, euclideanPath)
         {
+            OptimalSequence = _startPermutation.ToArray();
         }
 
         public override void Start(CancellationToken token, Action<double> action)
@@ -27,13 +30,49 @@ namespace TspOptimizer
 
             while (!token.IsCancellationRequested)
             {
+                try
+                {
+                    Parallel.For(0, _startPermutation.Length - 1, parallelOptions, i =>
+                    {
+                        for (int k = i + 1; k < _startPermutation.Length; k++)
+                        {
+                            var nextSequence = TwoOptSwap(currentSequence, i, k);
+                            double curMin = _euclideanPath.GetCurrentPathLength(nextSequence, true);
+
+                            if (curMin < minPathLength)
+                            {
+                                currentSequence = nextSequence.ToArray();
+                                minPathLength = curMin;
+                                action?.Invoke(minPathLength);
+                                _optimalSequence.OnNext(currentSequence);
+                            }
+                        }
+                    });
+                }
+                catch (OperationCanceledException e)
+                {
+                    _optimalSequence.OnCompleted();
+                }
+            }
+        }
+
+        public void Start(int maxLoopCount)
+        {
+            Random rand = new Random();
+            double minPathLength = double.MaxValue;
+            int[] currentSequence = _startPermutation.ToArray();
+
+            ParallelOptions parallelOptions = new ParallelOptions
+            {
+                MaxDegreeOfParallelism = Environment.ProcessorCount - 2
+            };
+
+            while (maxLoopCount-- > 0)
+            {
                 Parallel.For(0, _startPermutation.Length - 1, parallelOptions, i =>
                 {
                     for (int k = i + 1; k < _startPermutation.Length; k++)
                     {
-                        // Forcing delay for visualization
-                        // Thread.Sleep(1);
-
                         var nextSequence = TwoOptSwap(currentSequence, i, k);
                         double curMin = _euclideanPath.GetCurrentPathLength(nextSequence, true);
 
@@ -41,14 +80,11 @@ namespace TspOptimizer
                         {
                             currentSequence = nextSequence.ToArray();
                             minPathLength = curMin;
-                            action?.Invoke(minPathLength);
-                            _optimalSequence.OnNext(currentSequence);
+                            OptimalSequence = currentSequence.ToArray();
                         }
                     }
                 });
             }
-
-            _optimalSequence.OnCompleted();
         }
 
         /// <summary>
