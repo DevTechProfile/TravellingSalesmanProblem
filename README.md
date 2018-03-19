@@ -25,6 +25,6 @@ Normal distributed 3D data (not yet implemented)
 Circle shaped test data. Easy to see global optimum.
 
 ## BigValleyRandom
-High point concentration in center. It leads to a "Big Valley" in solution place. Could be used for Big-Valley-Search strategies.
+High point concentration in center. It leads to a "Big Valley" in solution space. Could be used for Big-Valley-Search strategies.
 
 ![alt text](https://github.com/MarkFangmeyer/TravellingSalesmanProblem/blob/master/Images/BigValleySet.png)
