@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Combinatorics
+﻿namespace Combinatorics
 {
     public class IndexEnumerator : EnumeratorBase<int>
     {
@@ -26,18 +20,6 @@ namespace Combinatorics
 
             CurrentCombination = startCombination.GetCopy();
         }
-
-        //Dieser Konstruktur ist dazu gedacht, um eine beliebige Stelle
-        //im lokalen Ring zu springen, ist aber noch fehlerhaft
-        //public IndexEnumerator(RepresentationBase<int> startCombination, int j) : base(startCombination)
-        //{
-        //    _j = j;
-
-        //    _k = startCombination.SelectedElementCount - 1;
-        //    _n = StartCombination.ElementCount - 1;
-
-        //    CurrentCombination = startCombination.GetCopy();
-        //}
 
         public override bool SetNext()
         {

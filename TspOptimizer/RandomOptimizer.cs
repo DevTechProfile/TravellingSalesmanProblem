@@ -35,7 +35,7 @@ namespace TspOptimizer
                 var swaps = new int[] { cp1, cp2 };
                 Helper.SwapPositions(currentSequence, swaps);
 
-                double curMin = _euclideanPath.GetCurrentPathLength(currentSequence, true);
+                double curMin = _euclideanPath.GetPathLength(currentSequence, true);
 
                 if (curMin < minPathLength)
                 {

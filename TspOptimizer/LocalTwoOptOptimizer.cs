@@ -37,7 +37,7 @@ namespace TspOptimizer
                         for (int k = i + 1; k < _startPermutation.Length; k++)
                         {
                             var nextSequence = Helper.TwoOptSwap(currentSequence, i, k);
-                            double curMin = _euclideanPath.GetCurrentPathLength(nextSequence, true);
+                            double curMin = _euclideanPath.GetPathLength(nextSequence, true);
 
                             if (curMin < minPathLength)
                             {
@@ -74,7 +74,7 @@ namespace TspOptimizer
                     for (int k = i + 1; k < _startPermutation.Length; k++)
                     {
                         var nextSequence = Helper.TwoOptSwap(currentSequence, i, k);
-                        double curMin = _euclideanPath.GetCurrentPathLength(nextSequence, true);
+                        double curMin = _euclideanPath.GetPathLength(nextSequence, true);
 
                         if (curMin < minPathLength)
                         {

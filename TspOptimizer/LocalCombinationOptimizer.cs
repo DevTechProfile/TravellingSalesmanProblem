@@ -28,11 +28,8 @@ namespace TspOptimizer
                 // One local ring
                 do
                 {
-                    //Force delay
-                    //Thread.Sleep(1);
-
                     Helper.SwapPositions(currentSequence, indexEnumerator.CurrentCombination.Elements);
-                    var currentPathLength = _euclideanPath.GetCurrentPathLength(currentSequence, true);
+                    var currentPathLength = _euclideanPath.GetPathLength(currentSequence, true);
 
                     if (currentPathLength < minPathLength)
                     {

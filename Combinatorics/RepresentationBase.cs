@@ -33,12 +33,7 @@ namespace Combinatorics
 
         public override string ToString()
         {
-            string elementsInfo = String.Empty;
-            foreach (var item in Elements)
-            {
-                elementsInfo += item.ToString() + " ";
-            }
-            return elementsInfo;
+            return string.Join(",", Elements);
         }
     }
 }

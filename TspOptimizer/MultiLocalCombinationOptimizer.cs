@@ -52,7 +52,7 @@ namespace TspOptimizer
 
         private void ObserveGlobalOptimum(int[] sequence, Action<double> action)
         {
-            var currentPathLengh = _euclideanPath.GetCurrentPathLength(sequence, true);
+            var currentPathLengh = _euclideanPath.GetPathLength(sequence, true);
 
             if (currentPathLengh < _globalMinimum)
             {

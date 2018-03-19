@@ -34,31 +34,31 @@ namespace Combinatorics
             return _distanceMatrix.Enumerate().Where(el => el != 0d).Average();
         }
 
-        public double GetCurrentPathLength(int[] currentSequence, bool closedPath)
+        public double GetPathLength(int[] sequence, bool closedPath)
         {
             double currentPathLength = 0d;
 
-            for (int i = 0; i < currentSequence.Length - 1; i++)
+            for (int i = 0; i < sequence.Length - 1; i++)
             {
-                currentPathLength += GetDistance(currentSequence[i], currentSequence[i + 1]);
+                currentPathLength += GetDistance(sequence[i], sequence[i + 1]);
             }
 
             // closed hamiltonian path
             if (closedPath)
             {
-                currentPathLength += GetDistance(currentSequence.First(), currentSequence.Last());
+                currentPathLength += GetDistance(sequence.First(), sequence.Last());
             }
 
             return currentPathLength;
         }
 
-        public double GetCurrentSubPathLength(int[] currentSequence, int maxIndex)
+        public double GetSubPathLength(int[] sequence, int maxIndex)
         {
             double currentPathLength = 0d;
 
             for (int i = 0; i < maxIndex; i++)
             {
-                currentPathLength += GetDistance(currentSequence[i], currentSequence[i + 1]);
+                currentPathLength += GetDistance(sequence[i], sequence[i + 1]);
             }
 
             return currentPathLength;
@@ -96,10 +96,8 @@ namespace Combinatorics
             {
                 for (int column = row + 1; column < points.Length; column++)
                 {
-                    // euclidean distance
-                    var differenceA = points[row][0] - points[column][0];
-                    var differenceB = points[row][1] - points[column][1];
-                    distanceMatrix[row, column] = differenceA * differenceA + differenceB * differenceB; //Distance.SSD(points[row], points[column]);
+                    // squared euclidean distance
+                    distanceMatrix[row, column] = Distance.SSD(points[row], points[column]);
                 }
             }
 

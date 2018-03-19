@@ -27,7 +27,7 @@ namespace TspOptimizer
 
             var preOptimalSequence = preOptimizer.OptimalSequence;
             _optimalSequence.OnNext(preOptimalSequence.ToArray());
-            _minPathLength = _euclideanPath.GetCurrentPathLength(preOptimalSequence, true);
+            _minPathLength = _euclideanPath.GetPathLength(preOptimalSequence, true);
             action?.Invoke(_minPathLength);
             Permute(_startPermutation, 0, _startPermutation.Length - 1);
 
@@ -43,7 +43,7 @@ namespace TspOptimizer
 
             if (i == endIndex)
             {
-                var currentMinValue = _euclideanPath.GetCurrentPathLength(currentPermutation, true);
+                var currentMinValue = _euclideanPath.GetPathLength(currentPermutation, true);
 
                 if (_minPathLength.CompareTo(currentMinValue) > 0)
                 {
@@ -63,7 +63,7 @@ namespace TspOptimizer
                     if (i > 1)
                     {
                         //Cut this branch(Branch & Bound)
-                        if (_minPathLength.CompareTo(_euclideanPath.GetCurrentSubPathLength(currentPermutation, i + 1)) <= 0)
+                        if (_minPathLength.CompareTo(_euclideanPath.GetSubPathLength(currentPermutation, i + 1)) <= 0)
                         {
                             return;
                         }

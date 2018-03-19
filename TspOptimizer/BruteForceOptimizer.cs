@@ -24,7 +24,7 @@ namespace TspOptimizer
             do
             {
                 var curPermuation = permutationEnumerator.CurrentPermutation.Elements;
-                double curMin = _euclideanPath.GetCurrentPathLength(curPermuation, true);
+                double curMin = _euclideanPath.GetPathLength(curPermuation, true);
 
                 if (curMin < minPathLength)
                 {
