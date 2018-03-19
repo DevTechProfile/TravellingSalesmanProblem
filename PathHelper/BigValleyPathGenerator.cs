@@ -11,7 +11,7 @@ namespace PathHelper
         public BigValleyPathGenerator()
         {
             _random = new Random();
-            _insideOutRatio = 1d / 8d;
+            _insideOutRatio = 1d / 10d;
         }
 
         public Coordinate[] GetPath(Size size, int numberOfPoints)
