@@ -29,8 +29,8 @@ namespace TspOptimizer
 
                 do
                 {
-                    cp1 = rand.Next(1, currentSequence.Length - 1);
-                    cp2 = rand.Next(1, currentSequence.Length - 1);
+                    cp1 = rand.Next(0, currentSequence.Length - 1);
+                    cp2 = rand.Next(1, currentSequence.Length);
                 } while (cp1 == cp2 || cp1 > cp2);
 
                 var nextSequence = Helper.TwoOptSwap(currentSequence, cp1, cp2);
