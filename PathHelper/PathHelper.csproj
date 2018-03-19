@@ -49,6 +49,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BigValleyPathGenerator.cs" />
     <Compile Include="Coordinate.cs" />
     <Compile Include="EPathType.cs" />
     <Compile Include="CirclePathGenerator.cs" />

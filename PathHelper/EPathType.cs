@@ -25,6 +25,11 @@
         /// <summary>
         /// Circle path
         /// </summary>
-        Ciclre
+        Ciclre,
+
+        /// <summary>
+        /// Big valley path
+        /// </summary>
+        BigValleyRandom
     }
 }

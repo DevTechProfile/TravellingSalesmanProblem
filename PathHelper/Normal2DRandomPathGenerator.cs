@@ -5,7 +5,7 @@ namespace PathHelper
 {
     public class Normal2DRandomPathGenerator : IPathGenerator
     {
-        Random _random;
+        private readonly Random _random;
 
         public Normal2DRandomPathGenerator()
         {

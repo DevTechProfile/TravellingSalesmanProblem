@@ -32,10 +32,14 @@ namespace TspOptimizer
             {
                 try
                 {
+                    // When using this parallel loop the calculation will not be deterministic 
+                    // because of missing locking and therefore random order. 
+                    // Nevertheless the results will be good 
                     Parallel.For(0, _startPermutation.Length - 1, parallelOptions, i =>
                     {
                         for (int k = i + 1; k < _startPermutation.Length; k++)
                         {
+
                             var nextSequence = Helper.TwoOptSwap(currentSequence, i, k);
                             double curMin = _euclideanPath.GetPathLength(nextSequence, true);
 

@@ -109,8 +109,8 @@ namespace Visualizer
             ShufflePathCommand = new DelegateCommand(OnShufflePath);
             PathTypeChangedCommand = new DelegateCommand(OnPathTypeChanged);
 
-            SelectedPathType = TspPathType.Ciclre;
-            SelectedOptimizer = TspOptimizerAlgorithm.RandomOptimizer;
+            SelectedPathType = TspPathType.Uniform2DRandom;
+            SelectedOptimizer = TspOptimizerAlgorithm.LocalTwoOptOptimizer;
             NumberOfPoints = _intialNumberOfPointsString;
             StartButtonEnable = true;
         }

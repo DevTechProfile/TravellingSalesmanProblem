@@ -27,6 +27,10 @@ namespace PathHelper
                     generator = new CirclePathGenerator();
                     path = generator.GetPath(size, numberOfPoints);
                     break;
+                case TspPathType.BigValleyRandom:
+                    generator = new BigValleyPathGenerator();
+                    path = generator.GetPath(size, numberOfPoints);
+                    break;
                 default:
                     throw new ArgumentException("Unknown path type");
             }
