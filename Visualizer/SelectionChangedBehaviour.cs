@@ -34,7 +34,8 @@ namespace Visualizer
             Selector selector = (Selector)sender;
             if (selector != null)
             {
-                if (selector.GetValue(CommandProperty) is ICommand command)
+                ICommand command = selector.GetValue(CommandProperty) as ICommand;
+                if (command != null)
                 {
                     command.Execute(selector.SelectedItem);
                 }
