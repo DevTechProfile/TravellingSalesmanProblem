@@ -40,6 +40,7 @@ namespace TspOptimizer
                     tspOptimizer = new SimulatedAnnealingOptimizer(startSequence, euclideanPath);
                     break;
                 case TspOptimizerAlgorithm.GeneticOptimizer:
+                    tspOptimizer = new GeneticOptimizer(startSequence, euclideanPath);
                     break;
                 case TspOptimizerAlgorithm.GridLocalBruteForceOptimizer:
                     break;

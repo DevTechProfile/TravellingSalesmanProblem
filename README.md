@@ -7,7 +7,7 @@ Algorithms to solve the travelling salesman problem
 * 2000 cities example on Ryzen Threadripper 32 logical cores: https://www.youtube.com/watch?v=ez1WRjxachg&t=1s
 
 # Path generator
-Genertors for test data 
+Generators for test data 
 
 ## Uniform2DRandom
 Uniform distributed 2D data

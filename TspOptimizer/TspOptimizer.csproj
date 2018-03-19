@@ -65,11 +65,17 @@
   <ItemGroup>
     <Compile Include="BranchAndBoundOptimizer.cs" />
     <Compile Include="BruteForceOptimizer.cs" />
+    <Compile Include="ChromosomeSegment.cs" />
+    <Compile Include="CollectionExtensions.cs" />
     <Compile Include="ETspOptimizer.cs" />
+    <Compile Include="GeneticOptimizer.cs" />
     <Compile Include="ITspOptimizer.cs" />
     <Compile Include="LocalCombinationOptimizer.cs" />
     <Compile Include="LocalTwoOptOptimizer.cs" />
     <Compile Include="MultiLocalCombinationOptimizer.cs" />
+    <Compile Include="OffSpringPair.cs" />
+    <Compile Include="ParentPair.cs" />
+    <Compile Include="PartiallyMappedCrossover.cs" />
     <Compile Include="SimulatedAnnealingOptimizer.cs" />
     <Compile Include="TspOptimizerBase.cs" />
     <Compile Include="RandomOptimizer.cs" />

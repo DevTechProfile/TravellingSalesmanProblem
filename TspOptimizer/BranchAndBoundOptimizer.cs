@@ -11,7 +11,8 @@ namespace TspOptimizer
         private CancellationToken _token;
         private Action<double> _action;
 
-        public BranchAndBoundOptimizer(int[] startPermutation, EuclideanPath euclideanPath) : base(startPermutation, euclideanPath)
+        public BranchAndBoundOptimizer(int[] startPermutation, EuclideanPath euclideanPath)
+            : base(startPermutation, euclideanPath)
         {
             _minPathLength = double.MaxValue;
         }
