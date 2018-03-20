@@ -23,7 +23,7 @@ namespace PathHelper
                     break;
                 case TspPathType.Normal3DRandom:
                     break;
-                case TspPathType.Ciclre:
+                case TspPathType.Circle:
                     generator = new CirclePathGenerator();
                     path = generator.GetPath(size, numberOfPoints);
                     break;

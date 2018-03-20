@@ -25,7 +25,7 @@
         /// <summary>
         /// Circle path
         /// </summary>
-        Ciclre,
+        Circle,
 
         /// <summary>
         /// Big valley path
