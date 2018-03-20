@@ -21,7 +21,7 @@ Uniform distributed 3D data (not yet implemented)
 ## Normal3DRandom
 Normal distributed 3D data (not yet implemented)
 
-## Ciclre
+## Circle
 Circle shaped test data. Easy to see global optimum.
 
 ## BigValleyRandom
