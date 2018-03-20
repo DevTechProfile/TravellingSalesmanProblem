@@ -18,6 +18,9 @@ namespace TspOptimizer
 
         public override void Start(CancellationToken token, Action<double> action)
         {
+            var useDelay = Config.UseDelay;
+            var delayTime = Config.DelayTime;
+
             Random rand = new Random();
             double minPathLength = double.MaxValue;
             int[] currentSequence = _startPermutation.ToArray();
@@ -39,6 +42,10 @@ namespace TspOptimizer
                     {
                         for (int k = i + 1; k < _startPermutation.Length; k++)
                         {
+                            if (useDelay)
+                            {
+                                Thread.Sleep(delayTime);
+                            }
 
                             var nextSequence = Helper.TwoOptSwap(currentSequence, i, k);
                             double curMin = _euclideanPath.GetPathLength(nextSequence, true);

@@ -19,6 +19,8 @@ namespace TspOptimizer
             _optimalSequence = new Subject<int[]>();
         }
 
+        public OptimizerConfig Config { get; set; }
+
         IObservable<int[]> ITspOptimizer.OptimalSequence => _optimalSequence.AsObservable();
 
         public abstract void Start(CancellationToken token, Action<double> action);

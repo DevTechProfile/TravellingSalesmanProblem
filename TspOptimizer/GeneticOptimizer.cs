@@ -8,7 +8,7 @@ namespace TspOptimizer
     public class GeneticOptimizer : TspOptimizerBase
     {
         private double _minDistance;
-        private readonly double _rate;
+        private double _rate;
         private int _number;
         private int _population;
         private int[] _minTour;
@@ -45,6 +45,11 @@ namespace TspOptimizer
 
         public override void Start(CancellationToken token, Action<double> action)
         {
+            var useDelay = Config.UseDelay;
+            var delayTime = Config.DelayTime;
+            _population = Config.PopulationSize;
+            _rate = Config.CrossoverRate;
+
             _action = action;
             double[] distance = new double[_population];
             MinTour = Enumerable.Range(0, _number).ToArray();
@@ -77,6 +82,11 @@ namespace TspOptimizer
 
             while (!token.IsCancellationRequested)
             {
+                if (useDelay)
+                {
+                    Thread.Sleep(delayTime);
+                }
+
                 if (_random.NextDouble() < _rate)
                 {
                     int i, j, parent1, parent2;

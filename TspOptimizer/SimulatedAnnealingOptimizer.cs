@@ -9,13 +9,18 @@ namespace TspOptimizer
     {
         private double _coolingRate;
 
-        public SimulatedAnnealingOptimizer(int[] startPermutation, EuclideanPath euclideanPath) : base(startPermutation, euclideanPath)
+        public SimulatedAnnealingOptimizer(int[] startPermutation, EuclideanPath euclideanPath)
+            : base(startPermutation, euclideanPath)
         {
             _coolingRate = 0.95;
         }
 
         public override void Start(CancellationToken token, Action<double> action)
         {
+            _coolingRate = Config.CoolingRate;
+            var useDelay = Config.UseDelay;
+            var delayTime = Config.DelayTime;
+
             Random rand = new Random();
             double minPathLength = double.MaxValue;
             double curPathLength = double.MaxValue;
@@ -25,6 +30,11 @@ namespace TspOptimizer
 
             while (!token.IsCancellationRequested)
             {
+                if (useDelay)
+                {
+                    Thread.Sleep(delayTime);
+                }
+
                 int cp1, cp2;
 
                 do

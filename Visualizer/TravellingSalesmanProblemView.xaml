@@ -1,42 +1,107 @@
-﻿<Window x:Class="Visualizer.TravellingSalesmanProblemView"
+﻿<Controls:MetroWindow x:Class="Visualizer.TravellingSalesmanProblemView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:oxy="clr-namespace:OxyPlot.Wpf;assembly=OxyPlot.Wpf"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:local="clr-namespace:Visualizer"
         mc:Ignorable="d"
-        Title="TSP" Height="800" Width="800">
+        Title="TSP" Height="800" Width="1200">
     <Window.DataContext>
         <local:TravellingSalesmanProblemViewModel/>
     </Window.DataContext>
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="60" />
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="60" />
-        </Grid.RowDefinitions>
-        <Label Width="220" HorizontalAlignment="Left" FontSize="12" Content="{Binding Path=Info}" Grid.Row="0"></Label>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-            <ComboBox Height="25" HorizontalAlignment="Center" ItemsSource="{Binding OptimizerSet}" SelectedItem="{Binding SelectedOptimizer}"></ComboBox>
-            <ComboBox local:SelectionChangedBehaviour.Command="{Binding PathTypeChangedCommand}" Margin="30 0 0 0" Height="25" HorizontalAlignment="Center" ItemsSource="{Binding PathTypeSet}" SelectedItem="{Binding SelectedPathType}"></ComboBox>
-        </StackPanel>
-        <Label Width="150" HorizontalAlignment="Right" FontSize="12" Content="{Binding Path=PathLength}" Grid.Row="0"></Label>
-        <oxy:Plot Title="{Binding PlotTitle}" Grid.Row="1">
-            <oxy:LineSeries Color="Beige" MarkerFill="Aquamarine" MarkerType="Circle" ItemsSource="{Binding Path=CurrentPath}" DataFieldX="X" DataFieldY="Y" />
-        </oxy:Plot>
-        <Grid Grid.Row="2">
-            <Button IsEnabled="{Binding StartButtonEnable}" Margin="20 0 0 0" Width="80" Height="40" HorizontalAlignment="Left" Content="Start" Command="{Binding StartPathOptimizationCommand}" />
-            <Button Margin="120 0 0 0" Width="80" Height="40" HorizontalAlignment="Left" Content="Stop" Command="{Binding StopPathOptimizationCommand}" />
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="400"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60" />
+                <RowDefinition Height="150" />
+                <RowDefinition Height="100" />
+                <RowDefinition Height="190" />
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Margin="10 10 0 0" HorizontalAlignment="Left" DockPanel.Dock="Top" Content="Optimizer Configuration" FontSize="20"></Label>
+            <GroupBox Margin="10 10 10 10" Header="General" FontSize="16" Grid.Row="1">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="1*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Content="Use delay"></Label>
+                    <CheckBox HorizontalAlignment="Left" Grid.Row="0" Grid.Column="1" Width="30" Height="30" IsChecked="{Binding UseDelay}"></CheckBox>
+                    <Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Content="Delay time (ms)"></Label>
+                    <TextBox HorizontalAlignment="Left" Grid.Row="1" Grid.Column="1" Width="Auto" Height="25" Text="{Binding DelayTime}"></TextBox>
+                </Grid>
+            </GroupBox>
+            <GroupBox Margin="10 10 10 10" Header="Simulated Annealing Optimizer" FontSize="16" Grid.Row="2">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Content="Cooling rate"></Label>
+                    <TextBox HorizontalAlignment="Left" Grid.Row="0" Grid.Column="1" Width="Auto" Height="25" Text="{Binding CoolingRate}"></TextBox>
+                </Grid>
+            </GroupBox>
+            <GroupBox Margin="10 10 10 10" Header="Genetic Optimizer" FontSize="16" Grid.Row="3">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="1*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Content="Use big-valley-search"></Label>
+                    <CheckBox HorizontalAlignment="Left" Grid.Row="0" Grid.Column="1" Width="30" Height="30" IsChecked="{Binding UseBigValleySearch}"></CheckBox>
+                    <Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Content="Population size" HorizontalAlignment="Left" Margin="0,6.667" Width="185"></Label>
+                    <TextBox HorizontalAlignment="Left" Grid.Row="1" Width="Auto" Height="25" Text="{Binding PopulationSize}" VerticalAlignment="Bottom" Grid.ColumnSpan="2" Margin="185,0,0,7.667"/>
+
+                    <Label Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Content="Crossover rate"></Label>
+                    <TextBox HorizontalAlignment="Left" Grid.Row="2" Width="Auto" Height="25" Text="{Binding CrossoverRate}" VerticalAlignment="Bottom" Grid.ColumnSpan="2" Margin="185,0,0,8"/>
+                </Grid>
+            </GroupBox>
+        </Grid>
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="60" />
+            </Grid.RowDefinitions>
+            <Label Margin="5 0 0 0" VerticalAlignment="Center" Width="220" HorizontalAlignment="Left" FontSize="12" Content="{Binding Path=Info}" Grid.Row="0"></Label>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Label VerticalAlignment="Center" FontSize="12" Content="Number of points:" Margin="0,15,0,19"/>
-                <TextBox AcceptsReturn="False" Margin="5,20,0,20" FontSize="12" Width="60" Height="20" VerticalAlignment="Center" Text="{Binding NumberOfPoints, UpdateSourceTrigger=PropertyChanged}">
-                    <TextBox.InputBindings>
-                        <KeyBinding Key="Enter" Command="{Binding PathTypeChangedCommand}" />
-                    </TextBox.InputBindings>
-                </TextBox>
+                <ComboBox Height="25" HorizontalAlignment="Center" ItemsSource="{Binding OptimizerSet}" SelectedItem="{Binding SelectedOptimizer}"></ComboBox>
+                <ComboBox local:SelectionChangedBehaviour.Command="{Binding PathTypeChangedCommand}" Margin="30 0 0 0" Height="25" HorizontalAlignment="Center" ItemsSource="{Binding PathTypeSet}" SelectedItem="{Binding SelectedPathType}"></ComboBox>
             </StackPanel>
-            <Button Margin="0 0 20 0" Width="80" Height="40" HorizontalAlignment="Right" Content="Shuffle" Command="{Binding ShufflePathCommand}" />
+            <Label VerticalAlignment="Center" Width="150" HorizontalAlignment="Right" FontSize="12" Content="{Binding Path=PathLength}" Grid.Row="0"></Label>
+            <oxy:Plot Title="{Binding PlotTitle}" Grid.Row="1">
+                <oxy:LineSeries Color="Beige" MarkerFill="Aquamarine" MarkerType="Circle" ItemsSource="{Binding Path=CurrentPath}" DataFieldX="X" DataFieldY="Y" />
+            </oxy:Plot>
+            <Grid Grid.Row="2">
+                <Button IsEnabled="{Binding StartButtonEnable}" Margin="20 0 0 0" Width="80" Height="40" HorizontalAlignment="Left" Content="Start" Command="{Binding StartPathOptimizationCommand}" />
+                <Button Margin="120 0 0 0" Width="80" Height="40" HorizontalAlignment="Left" Content="Stop" Command="{Binding StopPathOptimizationCommand}" />
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Label VerticalAlignment="Center" FontSize="12" Content="Number of points:" Margin="0,15,0,19"/>
+                    <TextBox AcceptsReturn="False" Margin="5,15,0,19" FontSize="12" Width="60" Height="26" VerticalAlignment="Center" Text="{Binding NumberOfPoints, UpdateSourceTrigger=PropertyChanged}">
+                        <TextBox.InputBindings>
+                            <KeyBinding Key="Enter" Command="{Binding PathTypeChangedCommand}" />
+                        </TextBox.InputBindings>
+                    </TextBox>
+                </StackPanel>
+                <Button Margin="0 0 20 0" Width="80" Height="40" HorizontalAlignment="Right" Content="Shuffle" Command="{Binding ShufflePathCommand}" />
+            </Grid>
         </Grid>
     </Grid>
-</Window>
+</Controls:MetroWindow>

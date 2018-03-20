@@ -4,6 +4,7 @@ using Prism.Commands;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Threading;
@@ -30,6 +31,12 @@ namespace Visualizer
         private string _pathLength;
         private string _numberOfPoints;
         private bool _startButtonEnable;
+        private bool _useDelay;
+        private string _delayTime;
+        private bool _useBigValleySearch;
+        private string _coolingRate;
+        private string _populationSize;
+        private string _crossoverRate;
 
         public IEnumerable<TspOptimizerAlgorithm> OptimizerSet
         {
@@ -85,7 +92,7 @@ namespace Visualizer
                 _numberOfPoints = value;
                 RaisePropertyChanged();
             }
-        }        
+        }
 
         public bool StartButtonEnable
         {
@@ -93,6 +100,41 @@ namespace Visualizer
             set { _startButtonEnable = value; RaisePropertyChanged(); }
         }
 
+        public bool UseDelay
+        {
+            get { return _useDelay; }
+            set { _useDelay = value; RaisePropertyChanged(); }
+        }
+
+        public string DelayTime
+        {
+            get { return _delayTime; }
+            set { _delayTime = value; RaisePropertyChanged(); }
+        }
+
+        public string CoolingRate
+        {
+            get { return _coolingRate; }
+            set { _coolingRate = value; RaisePropertyChanged(); }
+        }
+
+        public bool UseBigValleySearch
+        {
+            get { return _useBigValleySearch; }
+            set { _useBigValleySearch = value; RaisePropertyChanged(); }
+        }
+
+        public string PopulationSize
+        {
+            get { return _populationSize; }
+            set { _populationSize = value; RaisePropertyChanged(); }
+        }
+
+        public string CrossoverRate
+        {
+            get { return _crossoverRate; }
+            set { _crossoverRate = value; RaisePropertyChanged(); }
+        }
 
         public ICommand StartPathOptimizationCommand { get; }
 
@@ -100,7 +142,7 @@ namespace Visualizer
 
         public ICommand ShufflePathCommand { get; }
 
-        public ICommand PathTypeChangedCommand { get; }
+        public ICommand PathTypeChangedCommand { get; }        
 
         public TravellingSalesmanProblemViewModel()
         {
@@ -113,6 +155,14 @@ namespace Visualizer
             SelectedOptimizer = TspOptimizerAlgorithm.LocalTwoOptOptimizer;
             NumberOfPoints = _intialNumberOfPointsString;
             StartButtonEnable = true;
+
+            //Config
+            UseDelay = false;
+            DelayTime = "1";
+            CoolingRate = "0.95";
+            UseBigValleySearch = false;
+            PopulationSize = "1000";
+            CrossoverRate = "0.1";
         }
 
         private void OnPathTypeChanged()
@@ -167,7 +217,17 @@ namespace Visualizer
         private void OnAlgorithmStart()
         {
             StartButtonEnable = false;
-            ITspOptimizer optimizer = TspOptimizerFactory.Create(SelectedOptimizer, _shuffledTour, _euclideanPath);
+            var config = new OptimizerConfig()
+            {
+                UseDelay = UseDelay,
+                DelayTime = Convert.ToInt32(DelayTime),
+                CoolingRate = Convert.ToDouble(CoolingRate, CultureInfo.InvariantCulture),
+                UseBigValleySearch = UseBigValleySearch,
+                PopulationSize = Convert.ToInt32(PopulationSize),
+                CrossoverRate = Convert.ToDouble(CrossoverRate, CultureInfo.InvariantCulture)
+            };
+
+            ITspOptimizer optimizer = TspOptimizerFactory.Create(SelectedOptimizer, _shuffledTour, _euclideanPath, config);
 
             if (optimizer == null)
             {

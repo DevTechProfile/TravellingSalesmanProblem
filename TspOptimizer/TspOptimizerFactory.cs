@@ -13,34 +13,35 @@ namespace TspOptimizer
         /// <param name="euclideanPath"></param>
         /// <returns></returns>
         public static ITspOptimizer Create(TspOptimizerAlgorithm tspOptimizerAlgorithm,
-                                           int[] startSequence, EuclideanPath euclideanPath)
+                                           int[] startSequence, EuclideanPath euclideanPath,
+                                           OptimizerConfig config)
         {
             ITspOptimizer tspOptimizer = null;
             switch (tspOptimizerAlgorithm)
             {
                 case TspOptimizerAlgorithm.RandomOptimizer:
-                    tspOptimizer = new RandomOptimizer(startSequence, euclideanPath);
+                    tspOptimizer = new RandomOptimizer(startSequence, euclideanPath) { Config = config };
                     break;
                 case TspOptimizerAlgorithm.LocalCombinationOptimizer:
-                    tspOptimizer = new LocalCombinationOptimizer(startSequence, euclideanPath);
+                    tspOptimizer = new LocalCombinationOptimizer(startSequence, euclideanPath) { Config = config };
                     break;
                 case TspOptimizerAlgorithm.MultiLocalCombinationOptimizer:
-                    tspOptimizer = new MultiLocalCombinationOptimizer(startSequence, euclideanPath);
+                    tspOptimizer = new MultiLocalCombinationOptimizer(startSequence, euclideanPath) { Config = config };
                     break;
                 case TspOptimizerAlgorithm.LocalTwoOptOptimizer:
-                    tspOptimizer = new LocalTwoOptOptimizer(startSequence, euclideanPath);
+                    tspOptimizer = new LocalTwoOptOptimizer(startSequence, euclideanPath) { Config = config };
                     break;
                 case TspOptimizerAlgorithm.BruteForceOptimizer:
-                    tspOptimizer = new BruteForceOptimizer(startSequence, euclideanPath);
+                    tspOptimizer = new BruteForceOptimizer(startSequence, euclideanPath) { Config = config };
                     break;
                 case TspOptimizerAlgorithm.BranchAndBoundOptimizer:
-                    tspOptimizer = new BranchAndBoundOptimizer(startSequence, euclideanPath);
+                    tspOptimizer = new BranchAndBoundOptimizer(startSequence, euclideanPath) { Config = config };
                     break;
                 case TspOptimizerAlgorithm.SimulatedAnnealingOptimizer:
-                    tspOptimizer = new SimulatedAnnealingOptimizer(startSequence, euclideanPath);
+                    tspOptimizer = new SimulatedAnnealingOptimizer(startSequence, euclideanPath) { Config = config };
                     break;
                 case TspOptimizerAlgorithm.GeneticOptimizer:
-                    tspOptimizer = new GeneticOptimizer(startSequence, euclideanPath);
+                    tspOptimizer = new GeneticOptimizer(startSequence, euclideanPath) { Config = config };
                     break;
                 case TspOptimizerAlgorithm.GridLocalBruteForceOptimizer:
                     break;
