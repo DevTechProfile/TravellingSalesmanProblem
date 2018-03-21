@@ -37,6 +37,7 @@ namespace Visualizer
         private string _coolingRate;
         private string _populationSize;
         private string _crossoverRate;
+        private string _numberOfCores;
 
         public IEnumerable<TspOptimizerAlgorithm> OptimizerSet
         {
@@ -136,6 +137,12 @@ namespace Visualizer
             set { _crossoverRate = value; RaisePropertyChanged(); }
         }
 
+        public string NumberOfCores
+        {
+            get { return _numberOfCores; }
+            set { _numberOfCores = value; RaisePropertyChanged(); }
+        }        
+
         public ICommand StartPathOptimizationCommand { get; }
 
         public ICommand StopPathOptimizationCommand { get; }
@@ -163,6 +170,7 @@ namespace Visualizer
             UseBigValleySearch = false;
             PopulationSize = "1000";
             CrossoverRate = "0.1";
+            NumberOfCores = "6";
         }
 
         private void OnPathTypeChanged()
@@ -221,6 +229,7 @@ namespace Visualizer
             {
                 UseDelay = UseDelay,
                 DelayTime = Convert.ToInt32(DelayTime),
+                NumberOfCores = Convert.ToInt32(NumberOfCores),
                 CoolingRate = Convert.ToDouble(CoolingRate, CultureInfo.InvariantCulture),
                 UseBigValleySearch = UseBigValleySearch,
                 PopulationSize = Convert.ToInt32(PopulationSize),

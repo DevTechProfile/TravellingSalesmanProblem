@@ -19,7 +19,7 @@
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="60" />
-                <RowDefinition Height="150" />
+                <RowDefinition Height="190" />
                 <RowDefinition Height="100" />
                 <RowDefinition Height="190" />
             </Grid.RowDefinitions>
@@ -27,6 +27,7 @@
             <GroupBox Margin="10 10 10 10" Header="General" FontSize="16" Grid.Row="1">
                 <Grid>
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="1*" />
                         <RowDefinition Height="1*" />
                         <RowDefinition Height="1*" />
                     </Grid.RowDefinitions>
@@ -38,6 +39,9 @@
                     <CheckBox HorizontalAlignment="Left" Grid.Row="0" Grid.Column="1" Width="30" Height="30" IsChecked="{Binding UseDelay}"></CheckBox>
                     <Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Content="Delay time (ms)"></Label>
                     <TextBox HorizontalAlignment="Left" Grid.Row="1" Grid.Column="1" Width="Auto" Height="25" Text="{Binding DelayTime}"></TextBox>
+
+                    <Label Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Content="CPU logical cores"></Label>
+                    <TextBox HorizontalAlignment="Left" Grid.Row="2" Grid.Column="1" Width="Auto" Height="25" Text="{Binding NumberOfCores}"></TextBox>
                 </Grid>
             </GroupBox>
             <GroupBox Margin="10 10 10 10" Header="Simulated Annealing Optimizer" FontSize="16" Grid.Row="2">
