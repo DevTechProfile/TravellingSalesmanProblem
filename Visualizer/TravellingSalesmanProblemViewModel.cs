@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Reactive.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -38,6 +39,8 @@ namespace Visualizer
         private string _populationSize;
         private string _crossoverRate;
         private string _numberOfCores;
+        private string _infoOutput;
+        private bool _isLogsChanged;
 
         public IEnumerable<TspOptimizerAlgorithm> OptimizerSet
         {
@@ -141,7 +144,21 @@ namespace Visualizer
         {
             get { return _numberOfCores; }
             set { _numberOfCores = value; RaisePropertyChanged(); }
-        }        
+        }
+
+        public string InfoOutput
+        {
+            get { return _infoOutput; }
+            set { _infoOutput = value; RaisePropertyChanged(); }
+        }
+
+        public bool IsLogsChanged
+        {
+            get { return _isLogsChanged; }
+            set { _isLogsChanged = value; RaisePropertyChanged(); }
+        }
+
+
 
         public ICommand StartPathOptimizationCommand { get; }
 
@@ -162,6 +179,7 @@ namespace Visualizer
             SelectedOptimizer = TspOptimizerAlgorithm.LocalTwoOptOptimizer;
             NumberOfPoints = _intialNumberOfPointsString;
             StartButtonEnable = true;
+            InfoOutput = "Optimizer info...";
 
             //Config
             UseDelay = false;
@@ -189,6 +207,16 @@ namespace Visualizer
             _shuffledTour = Enumerable.Range(0, _initialPath.Count).ToArray();
 
             PlotTour(Enumerable.Range(0, _initialPath.Count).ToArray());
+        }
+
+        private void UpdateInfo(string entry)
+        {
+            StringBuilder builder = new StringBuilder(InfoOutput);
+            builder.Append(Environment.NewLine);
+            builder.Append(entry);
+
+            InfoOutput = builder.ToString();
+            IsLogsChanged = true;
         }
 
         private int VerifyInput()
@@ -237,6 +265,7 @@ namespace Visualizer
             };
 
             ITspOptimizer optimizer = TspOptimizerFactory.Create(SelectedOptimizer, _shuffledTour, _euclideanPath, config);
+            optimizer.OptimizerInfo.Subscribe(UpdateInfo);
 
             if (optimizer == null)
             {

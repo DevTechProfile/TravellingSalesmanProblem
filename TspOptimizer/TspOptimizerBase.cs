@@ -19,11 +19,14 @@ namespace TspOptimizer
             _euclideanPath = euclideanPath;
             _config = config;
             _optimalSequence = new Subject<int[]>();
+            OptimizerInfo = new Subject<string>();
         }
 
         public OptimizerConfig Config { get; set; }
 
         IObservable<int[]> ITspOptimizer.OptimalSequence => _optimalSequence.AsObservable();
+
+        public Subject<string> OptimizerInfo { get; }
 
         public abstract void Start(CancellationToken token, Action<double> action);
     }

@@ -65,22 +65,26 @@ namespace TspOptimizer
             }
         }
 
-        public void Start(int maxLoopCount)
+        public void Start(int maxLoopCount, bool useRandomBounds)
         {
             Random rand = new Random();
             double minPathLength = double.MaxValue;
             int[] currentSequence = _startPermutation.ToArray();
 
-            ParallelOptions parallelOptions = new ParallelOptions
+            int endBoundOuterLoop = _startPermutation.Length - 1;
+            int endBoundInnerLoop = _startPermutation.Length;
+
+            if (useRandomBounds)
             {
-                MaxDegreeOfParallelism = _config.NumberOfCores
-            };
+                endBoundOuterLoop = rand.Next(_startPermutation.Length - 1);
+                endBoundInnerLoop = rand.Next(endBoundOuterLoop + 1, _startPermutation.Length);
+            }
 
             while (maxLoopCount-- > 0)
             {
-                Parallel.For(0, _startPermutation.Length - 1, parallelOptions, i =>
+                for (int i = 0; i < endBoundOuterLoop; i++)
                 {
-                    for (int k = i + 1; k < _startPermutation.Length; k++)
+                    for (int k = i + 1; k < endBoundInnerLoop; k++)
                     {
                         var nextSequence = Helper.TwoOptSwap(currentSequence, i, k);
                         double curMin = _euclideanPath.GetPathLength(nextSequence, true);
@@ -92,7 +96,7 @@ namespace TspOptimizer
                             OptimalSequence = currentSequence.ToArray();
                         }
                     }
-                });
+                }
             }
         }
     }

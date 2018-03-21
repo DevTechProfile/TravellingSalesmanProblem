@@ -24,7 +24,7 @@ namespace TspOptimizer
 
             // Do pre optimization -> early cuts in branches
             var preOptimizer = new LocalTwoOptOptimizer(_startPermutation, _euclideanPath, _config);
-            preOptimizer.Start(1);
+            preOptimizer.Start(1, false);
 
             var preOptimalSequence = preOptimizer.OptimalSequence;
             _optimalSequence.OnNext(preOptimalSequence.ToArray());

@@ -120,6 +120,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ScrollViewerChangedBehaviour.cs" />
     <Compile Include="SelectionChangedBehaviour.cs" />
     <Compile Include="TravellingSalesmanProblemViewModel.cs" />
     <Compile Include="TravellingSalesmanProblemView.xaml.cs">

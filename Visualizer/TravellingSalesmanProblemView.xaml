@@ -22,6 +22,7 @@
                 <RowDefinition Height="190" />
                 <RowDefinition Height="100" />
                 <RowDefinition Height="190" />
+                <RowDefinition Height="1*" />
             </Grid.RowDefinitions>
             <Label Grid.Row="0" Margin="10 10 0 0" HorizontalAlignment="Left" DockPanel.Dock="Top" Content="Optimizer Configuration" FontSize="20"></Label>
             <GroupBox Margin="10 10 10 10" Header="General" FontSize="16" Grid.Row="1">
@@ -77,6 +78,11 @@
                     <TextBox HorizontalAlignment="Left" Grid.Row="2" Width="Auto" Height="25" Text="{Binding CrossoverRate}" VerticalAlignment="Bottom" Grid.ColumnSpan="2" Margin="185,0,0,8"/>
                 </Grid>
             </GroupBox>
+            <Grid Grid.Row="4">
+                <ScrollViewer local:ScrollViewerChangedBehaviour.AutoScroll="{Binding IsLogsChanged}" Margin="10" Background="CadetBlue">
+                    <TextBlock Text="{Binding InfoOutput}" Foreground="White" FontFamily="Consolas" Padding="12"/>
+                </ScrollViewer>
+            </Grid>
         </Grid>
         <Grid Grid.Column="0">
             <Grid.RowDefinitions>

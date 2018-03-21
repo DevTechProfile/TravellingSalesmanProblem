@@ -2,6 +2,7 @@
 using System;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace TspOptimizer
 {
@@ -48,6 +49,11 @@ namespace TspOptimizer
 
         public override void Start(CancellationToken token, Action<double> action)
         {
+            if (_config.UseBigValleySearch)
+                OptimizerInfo.OnNext("Starting Genetic Optimizer with Big-Valley-Search");
+            else
+                OptimizerInfo.OnNext("Starting Genetic Optimizer without Big-Valley-Search");
+
             _action = action;
             double[] distances = new double[_population];
             MinTour = Enumerable.Range(0, _number).ToArray();
@@ -199,11 +205,40 @@ namespace TspOptimizer
         {
             if (_config.UseBigValleySearch)
             {
-                for (int i = 0; i < _number * _number; i++)
+                Tuple<double, int[]>[] randomSequences = new Tuple<double, int[]>[_population];
+
+                int count = 0;
+                Parallel.For(0, _population, i =>
                 {
-                    int[] city = Enumerable.Range(0, _number).ToArray();
-                    Helper.Shuffle(city);
+                    int[] sequence = Enumerable.Range(0, _number).ToArray();
+                    Helper.Shuffle(sequence);
+
+                    var twoOptOptimizer = new LocalTwoOptOptimizer(sequence, _euclideanPath, _config);
+                    twoOptOptimizer.Start(1, true);
+
+                    var distance = _euclideanPath.GetPathLength(twoOptOptimizer.OptimalSequence, true);
+                    randomSequences[i] = new Tuple<double, int[]>(distance, twoOptOptimizer.OptimalSequence);
+
+                    count++;
+                    if (count % 10 == 0)
+                    {
+                        OptimizerInfo.OnNext("Progress Big-Valley-Search: " + Math.Round(count / (double)_population * 100d, 2).ToString() + "%");
+                    }
+                });
+
+                var orderedSequences = randomSequences.OrderBy(tuple => tuple.Item1).ToArray();
+
+                for (int p = 0; p < _population; p++)
+                {
+                    distances[p] = orderedSequences[p].Item1;
+                    int[] sequence = orderedSequences[p].Item2;
+
+                    for (int n = 0; n < _number; n++)
+                        chromosomePool[p, n] = sequence[n];
                 }
+
+                MinTour = orderedSequences.First().Item2.ToArray();
+                MinDistance = orderedSequences.First().Item1;
             }
             else
             {
