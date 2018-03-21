@@ -8,8 +8,8 @@ namespace TspOptimizer
 {
     public class RandomOptimizer : TspOptimizerBase
     {
-        public RandomOptimizer(int[] startPermutation, EuclideanPath euclideanPath)
-            : base(startPermutation, euclideanPath)
+        public RandomOptimizer(int[] startPermutation, EuclideanPath euclideanPath, OptimizerConfig config)
+            : base(startPermutation, euclideanPath, config)
         {
         }
 
@@ -22,7 +22,10 @@ namespace TspOptimizer
             while (!token.IsCancellationRequested)
             {
                 // Forcing delay for visualization
-                Thread.Sleep(1);
+                if (_config.UseDelay)
+                {
+                    Thread.Sleep(_config.DelayTime);
+                }
 
                 int cp1, cp2;
 

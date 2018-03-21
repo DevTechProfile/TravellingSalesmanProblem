@@ -9,8 +9,8 @@ namespace TspOptimizer
     {
         private long _permutationCount;
 
-        public BruteForceOptimizer(int[] startPermutation, EuclideanPath euclideanPath)
-            : base(startPermutation, euclideanPath)
+        public BruteForceOptimizer(int[] startPermutation, EuclideanPath euclideanPath, OptimizerConfig config)
+            : base(startPermutation, euclideanPath, config)
         {
             _permutationCount = Enumerable.Range(1, _startPermutation.Length).Aggregate(1, (acc, val) => acc * val);
         }
@@ -23,6 +23,12 @@ namespace TspOptimizer
 
             do
             {
+                // Forcing delay for visualization
+                if (_config.UseDelay)
+                {
+                    Thread.Sleep(_config.DelayTime);
+                }
+
                 var curPermuation = permutationEnumerator.CurrentPermutation.Elements;
                 double curMin = _euclideanPath.GetPathLength(curPermuation, true);
 

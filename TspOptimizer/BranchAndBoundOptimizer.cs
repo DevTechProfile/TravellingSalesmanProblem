@@ -11,8 +11,8 @@ namespace TspOptimizer
         private CancellationToken _token;
         private Action<double> _action;
 
-        public BranchAndBoundOptimizer(int[] startPermutation, EuclideanPath euclideanPath)
-            : base(startPermutation, euclideanPath)
+        public BranchAndBoundOptimizer(int[] startPermutation, EuclideanPath euclideanPath, OptimizerConfig config)
+            : base(startPermutation, euclideanPath, config)
         {
             _minPathLength = double.MaxValue;
         }
@@ -23,7 +23,7 @@ namespace TspOptimizer
             _action = action;
 
             // Do pre optimization -> early cuts in branches
-            var preOptimizer = new LocalTwoOptOptimizer(_startPermutation, _euclideanPath);
+            var preOptimizer = new LocalTwoOptOptimizer(_startPermutation, _euclideanPath, _config);
             preOptimizer.Start(1);
 
             var preOptimalSequence = preOptimizer.OptimalSequence;
@@ -40,6 +40,12 @@ namespace TspOptimizer
             if (_token.IsCancellationRequested)
             {
                 return;
+            }
+
+            // Forcing delay for visualization
+            if (_config.UseDelay)
+            {
+                Thread.Sleep(_config.DelayTime);
             }
 
             if (i == endIndex)

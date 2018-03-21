@@ -14,6 +14,7 @@ namespace TspOptimizer
         private int[] _minTour;
         private Random _random;
         private Action<double> _action;
+        private bool _useBigValleySearch;
         private PartiallyMappedCrossover _partiallyMappedCrossover;
 
         public int[] MinTour
@@ -33,58 +34,33 @@ namespace TspOptimizer
             }
         }
 
-        public GeneticOptimizer(int[] startPermutation, EuclideanPath euclideanPath)
-            : base(startPermutation, euclideanPath)
+        public GeneticOptimizer(int[] startPermutation, EuclideanPath euclideanPath, OptimizerConfig config)
+            : base(startPermutation, euclideanPath, config)
         {
-            _rate = 0.1;
+            _rate = _config.CrossoverRate;
             _number = _startPermutation.Length;
-            _population = 1000;
+            _population = _config.PopulationSize;
             _random = new Random();
             _partiallyMappedCrossover = new PartiallyMappedCrossover(_number);
+
+            MinDistance = double.MaxValue;
         }
 
         public override void Start(CancellationToken token, Action<double> action)
         {
-            var useDelay = Config.UseDelay;
-            var delayTime = Config.DelayTime;
-            _population = Config.PopulationSize;
-            _rate = Config.CrossoverRate;
-
             _action = action;
-            double[] distance = new double[_population];
+            double[] distances = new double[_population];
             MinTour = Enumerable.Range(0, _number).ToArray();
             int[,] chromosomePool = new int[_population, _number];
 
-            MinDistance = double.MaxValue;
-
-            #region Fill population pool
-
-            for (int p = 0; p < _population; p++)
-            {
-                int[] city = Enumerable.Range(0, _number).ToArray();
-                Helper.Shuffle(city);
-
-                for (int n = 0; n < _number; n++)
-                    chromosomePool[p, n] = city[n];
-
-                distance[p] = TourDistance(city);
-
-                if (distance[p] < MinDistance)
-                {
-                    MinDistance = distance[p];
-
-                    for (int n = 0; n < _number; n++)
-                        MinTour[n] = chromosomePool[p, n];
-                }
-            }
-
-            #endregion Fill population pool
+            SetPopulationPool(chromosomePool, distances);
 
             while (!token.IsCancellationRequested)
             {
-                if (useDelay)
+                // Forcing delay for visualization
+                if (_config.UseDelay)
                 {
-                    Thread.Sleep(delayTime);
+                    Thread.Sleep(_config.DelayTime);
                 }
 
                 if (_random.NextDouble() < _rate)
@@ -96,7 +72,7 @@ namespace TspOptimizer
                     i = _random.Next(_population);
                     j = _random.Next(_population);
 
-                    if (distance[i] < distance[j])
+                    if (distances[i] < distances[j])
                         parent1 = i;
 
                     else
@@ -105,7 +81,7 @@ namespace TspOptimizer
                     i = _random.Next(_population);
                     j = _random.Next(_population);
 
-                    if (distance[i] < distance[j])
+                    if (distances[i] < distances[j])
                         parent2 = i;
 
                     else
@@ -134,19 +110,19 @@ namespace TspOptimizer
                     double o1Fitness = TourDistance(o1);
                     double o2Fitness = TourDistance(o2);
 
-                    if (o1Fitness < distance[parent1])
+                    if (o1Fitness < distances[parent1])
                         for (i = 0; i < _number; i++)
                             chromosomePool[parent1, i] = o1[i];
 
-                    if (o2Fitness < distance[parent2])
+                    if (o2Fitness < distances[parent2])
                         for (i = 0; i < _number; i++)
                             chromosomePool[parent2, i] = o2[i];
 
                     for (int p = 0; p < _population; p++)
                     {
-                        if (distance[p] < MinDistance)
+                        if (distances[p] < MinDistance)
                         {
-                            MinDistance = distance[p];
+                            MinDistance = distances[p];
 
                             for (int n = 0; n < _number; n++)
                                 MinTour[n] = chromosomePool[p, n];
@@ -161,7 +137,7 @@ namespace TspOptimizer
                     int i = _random.Next(_population);
                     int j = _random.Next(_population);
 
-                    if (distance[i] < distance[j])
+                    if (distances[i] < distances[j])
                         p = i;
 
                     else
@@ -180,10 +156,10 @@ namespace TspOptimizer
 
                     for (int q = 0; q < _population; q++)
                     {
-                        if (distance[q] >= maxDistance)
+                        if (distances[q] >= maxDistance)
                         {
                             maxIndex = q;
-                            maxDistance = distance[q];
+                            maxDistance = distances[q];
                         }
                     }
 
@@ -192,7 +168,7 @@ namespace TspOptimizer
 
                     for (int q = 0; q < _population; q++)
                     {
-                        if (distance[q] == maxDistance)
+                        if (distances[q] == maxDistance)
                         {
                             index[count++] = q;
                         }
@@ -200,9 +176,9 @@ namespace TspOptimizer
 
                     maxIndex = index[_random.Next(count)];
 
-                    if (childDistance < distance[maxIndex])
+                    if (childDistance < distances[maxIndex])
                     {
-                        distance[maxIndex] = childDistance;
+                        distances[maxIndex] = childDistance;
 
                         for (int n = 0; n < _number; n++)
                             chromosomePool[maxIndex, n] = child[n];
@@ -215,6 +191,28 @@ namespace TspOptimizer
                                 MinTour[n] = child[n];
                         }
                     }
+                }
+            }
+        }
+
+        private void SetPopulationPool(int[,] chromosomePool, double[] distances)
+        {
+            for (int p = 0; p < _population; p++)
+            {
+                int[] city = Enumerable.Range(0, _number).ToArray();
+                Helper.Shuffle(city);
+
+                for (int n = 0; n < _number; n++)
+                    chromosomePool[p, n] = city[n];
+
+                distances[p] = TourDistance(city);
+
+                if (distances[p] < MinDistance)
+                {
+                    MinDistance = distances[p];
+
+                    for (int n = 0; n < _number; n++)
+                        MinTour[n] = chromosomePool[p, n];
                 }
             }
         }

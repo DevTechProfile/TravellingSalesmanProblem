@@ -7,8 +7,8 @@ namespace TspOptimizer
 {
     public class LocalCombinationOptimizer : TspOptimizerBase
     {
-        public LocalCombinationOptimizer(int[] startPermutation, EuclideanPath euclideanPath)
-            : base(startPermutation, euclideanPath)
+        public LocalCombinationOptimizer(int[] startPermutation, EuclideanPath euclideanPath, OptimizerConfig config)
+            : base(startPermutation, euclideanPath, config)
         {
         }
 
@@ -28,6 +28,12 @@ namespace TspOptimizer
                 // One local ring
                 do
                 {
+                    // Forcing delay for visualization
+                    if (_config.UseDelay)
+                    {
+                        Thread.Sleep(_config.DelayTime);
+                    }
+
                     Helper.SwapPositions(currentSequence, indexEnumerator.CurrentCombination.Elements);
                     var currentPathLength = _euclideanPath.GetPathLength(currentSequence, true);
 

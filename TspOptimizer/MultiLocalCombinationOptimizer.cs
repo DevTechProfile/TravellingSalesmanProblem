@@ -12,11 +12,11 @@ namespace TspOptimizer
         ITspOptimizer[] _optimizerSet;
         double _globalMinimum;
 
-        public MultiLocalCombinationOptimizer(int[] startPermutation, EuclideanPath euclideanPath)
-            : base(startPermutation, euclideanPath)
+        public MultiLocalCombinationOptimizer(int[] startPermutation, EuclideanPath euclideanPath, OptimizerConfig config)
+            : base(startPermutation, euclideanPath, config)
         {
             _globalMinimum = double.MaxValue;
-            SetMultiSearcher(Environment.ProcessorCount - 2);
+            SetMultiSearcher(_config.NumberOfCores);
         }
 
         public void SetMultiSearcher(int count)
@@ -28,7 +28,7 @@ namespace TspOptimizer
                 var shuffledSequence = _startPermutation.ToArray();
                 Helper.Shuffle(shuffledSequence);
 
-                _optimizerSet[i] = new LocalCombinationOptimizer(shuffledSequence, _euclideanPath);
+                _optimizerSet[i] = new LocalCombinationOptimizer(shuffledSequence, _euclideanPath, _config);
             }
         }
 

@@ -10,17 +10,14 @@ namespace TspOptimizer
     {
         public int[] OptimalSequence { get; private set; }
 
-        public LocalTwoOptOptimizer(int[] startPermutation, EuclideanPath euclideanPath)
-            : base(startPermutation, euclideanPath)
+        public LocalTwoOptOptimizer(int[] startPermutation, EuclideanPath euclideanPath, OptimizerConfig config)
+            : base(startPermutation, euclideanPath, config)
         {
             OptimalSequence = _startPermutation.ToArray();
         }
 
         public override void Start(CancellationToken token, Action<double> action)
         {
-            var useDelay = Config.UseDelay;
-            var delayTime = Config.DelayTime;
-
             Random rand = new Random();
             double minPathLength = double.MaxValue;
             int[] currentSequence = _startPermutation.ToArray();
@@ -42,9 +39,10 @@ namespace TspOptimizer
                     {
                         for (int k = i + 1; k < _startPermutation.Length; k++)
                         {
-                            if (useDelay)
+                            // Forcing delay for visualization
+                            if (_config.UseDelay)
                             {
-                                Thread.Sleep(delayTime);
+                                Thread.Sleep(_config.DelayTime);
                             }
 
                             var nextSequence = Helper.TwoOptSwap(currentSequence, i, k);
@@ -75,7 +73,7 @@ namespace TspOptimizer
 
             ParallelOptions parallelOptions = new ParallelOptions
             {
-                MaxDegreeOfParallelism = Environment.ProcessorCount - 2
+                MaxDegreeOfParallelism = _config.NumberOfCores
             };
 
             while (maxLoopCount-- > 0)

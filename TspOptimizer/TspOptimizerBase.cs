@@ -11,11 +11,13 @@ namespace TspOptimizer
         protected int[] _startPermutation;
         protected Subject<int[]> _optimalSequence;
         protected EuclideanPath _euclideanPath;
+        protected OptimizerConfig _config;
 
-        public TspOptimizerBase(int[] startPermutation, EuclideanPath euclideanPath)
+        public TspOptimizerBase(int[] startPermutation, EuclideanPath euclideanPath, OptimizerConfig config)
         {
             _startPermutation = startPermutation;
             _euclideanPath = euclideanPath;
+            _config = config;
             _optimalSequence = new Subject<int[]>();
         }
 
