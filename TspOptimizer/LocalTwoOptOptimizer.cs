@@ -25,7 +25,7 @@ namespace TspOptimizer
             ParallelOptions parallelOptions = new ParallelOptions
             {
                 CancellationToken = token,
-                MaxDegreeOfParallelism = Environment.ProcessorCount - 2
+                MaxDegreeOfParallelism = _config.NumberOfCores
             };
 
             while (!token.IsCancellationRequested)

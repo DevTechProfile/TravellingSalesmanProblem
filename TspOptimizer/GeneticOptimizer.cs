@@ -197,22 +197,33 @@ namespace TspOptimizer
 
         private void SetPopulationPool(int[,] chromosomePool, double[] distances)
         {
-            for (int p = 0; p < _population; p++)
+            if (_config.UseBigValleySearch)
             {
-                int[] city = Enumerable.Range(0, _number).ToArray();
-                Helper.Shuffle(city);
-
-                for (int n = 0; n < _number; n++)
-                    chromosomePool[p, n] = city[n];
-
-                distances[p] = TourDistance(city);
-
-                if (distances[p] < MinDistance)
+                for (int i = 0; i < _number * _number; i++)
                 {
-                    MinDistance = distances[p];
+                    int[] city = Enumerable.Range(0, _number).ToArray();
+                    Helper.Shuffle(city);
+                }
+            }
+            else
+            {
+                for (int p = 0; p < _population; p++)
+                {
+                    int[] city = Enumerable.Range(0, _number).ToArray();
+                    Helper.Shuffle(city);
 
                     for (int n = 0; n < _number; n++)
-                        MinTour[n] = chromosomePool[p, n];
+                        chromosomePool[p, n] = city[n];
+
+                    distances[p] = TourDistance(city);
+
+                    if (distances[p] < MinDistance)
+                    {
+                        MinDistance = distances[p];
+
+                        for (int n = 0; n < _number; n++)
+                            MinTour[n] = chromosomePool[p, n];
+                    }
                 }
             }
         }
