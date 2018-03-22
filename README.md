@@ -27,6 +27,4 @@ Circle shaped test data. Easy to see global optimum.
 ## BigValleyRandom
 High point concentration in center. It leads to a "Big Valley" in solution space. Could be used for Big-Valley-Search strategies.
 
-![](https://github.com/MarkFangmeyer/TravellingSalesmanProblem/blob/master/Images/BigValleySet.png =400x400)
-
 <img src="https://github.com/MarkFangmeyer/TravellingSalesmanProblem/blob/master/Images/BigValleySet.png" width="400" height="400" />
