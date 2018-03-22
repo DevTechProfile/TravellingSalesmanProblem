@@ -18,7 +18,7 @@ namespace Visualizer
 {
     public class TravellingSalesmanProblemViewModel : BindableBase
     {
-        const string _intialNumberOfPointsString = "36";
+        const string _intialNumberOfPointsString = "200";
 
         private List<Point> _currentPath;
         private List<Point> _initialPath;
@@ -41,6 +41,7 @@ namespace Visualizer
         private string _numberOfCores;
         private string _infoOutput;
         private bool _isLogsChanged;
+        private string _bigValleySearchRate;
 
         public IEnumerable<TspOptimizerAlgorithm> OptimizerSet
         {
@@ -146,6 +147,12 @@ namespace Visualizer
             set { _numberOfCores = value; RaisePropertyChanged(); }
         }
 
+        public string BigValleySearchRate
+        {
+            get { return _bigValleySearchRate; }
+            set { _bigValleySearchRate = value; RaisePropertyChanged(); }
+        }
+
         public string InfoOutput
         {
             get { return _infoOutput; }
@@ -158,15 +165,13 @@ namespace Visualizer
             set { _isLogsChanged = value; RaisePropertyChanged(); }
         }
 
-
-
         public ICommand StartPathOptimizationCommand { get; }
 
         public ICommand StopPathOptimizationCommand { get; }
 
         public ICommand ShufflePathCommand { get; }
 
-        public ICommand PathTypeChangedCommand { get; }        
+        public ICommand PathTypeChangedCommand { get; }
 
         public TravellingSalesmanProblemViewModel()
         {
@@ -175,8 +180,8 @@ namespace Visualizer
             ShufflePathCommand = new DelegateCommand(OnShufflePath);
             PathTypeChangedCommand = new DelegateCommand(OnPathTypeChanged);
 
-            SelectedPathType = TspPathType.Uniform2DRandom;
-            SelectedOptimizer = TspOptimizerAlgorithm.LocalTwoOptOptimizer;
+            SelectedPathType = TspPathType.BigValleyRandom;
+            SelectedOptimizer = TspOptimizerAlgorithm.GeneticOptimizer;
             NumberOfPoints = _intialNumberOfPointsString;
             StartButtonEnable = true;
             InfoOutput = "Optimizer info...";
@@ -185,10 +190,11 @@ namespace Visualizer
             UseDelay = false;
             DelayTime = "1";
             CoolingRate = "0.95";
-            UseBigValleySearch = false;
-            PopulationSize = "1000";
+            UseBigValleySearch = true;
+            PopulationSize = "500";
             CrossoverRate = "0.1";
-            NumberOfCores = "6";
+            NumberOfCores = "16";
+            BigValleySearchRate = "0.2";
         }
 
         private void OnPathTypeChanged()
@@ -261,11 +267,11 @@ namespace Visualizer
                 CoolingRate = Convert.ToDouble(CoolingRate, CultureInfo.InvariantCulture),
                 UseBigValleySearch = UseBigValleySearch,
                 PopulationSize = Convert.ToInt32(PopulationSize),
-                CrossoverRate = Convert.ToDouble(CrossoverRate, CultureInfo.InvariantCulture)
+                CrossoverRate = Convert.ToDouble(CrossoverRate, CultureInfo.InvariantCulture),
+                BigValleySearchRate = Convert.ToDouble(BigValleySearchRate, CultureInfo.InvariantCulture)
             };
 
             ITspOptimizer optimizer = TspOptimizerFactory.Create(SelectedOptimizer, _shuffledTour, _euclideanPath, config);
-            optimizer.OptimizerInfo.Subscribe(UpdateInfo);
 
             if (optimizer == null)
             {
@@ -273,6 +279,7 @@ namespace Visualizer
                 return;
             }
 
+            optimizer.OptimizerInfo.Subscribe(UpdateInfo);
             optimizer.OptimalSequence.Subscribe(PlotTour);
 
             _tokenSource = new CancellationTokenSource();

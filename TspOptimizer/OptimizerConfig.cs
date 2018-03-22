@@ -9,5 +9,6 @@
         public bool UseBigValleySearch { get; set; }
         public int PopulationSize { get; set; }
         public double CrossoverRate { get; set; }
+        public double BigValleySearchRate { get; set; }
     }
 }

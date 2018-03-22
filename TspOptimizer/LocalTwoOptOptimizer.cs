@@ -18,6 +18,8 @@ namespace TspOptimizer
 
         public override void Start(CancellationToken token, Action<double> action)
         {
+            OptimizerInfo.OnNext("Starting 2-opt Optimizer");
+
             Random rand = new Random();
             double minPathLength = double.MaxValue;
             int[] currentSequence = _startPermutation.ToArray();
@@ -61,31 +63,26 @@ namespace TspOptimizer
                 catch (OperationCanceledException)
                 {
                     _optimalSequence.OnCompleted();
+                    OptimizerInfo.OnNext("Terminated 2-opt Optimizer with distance: " + minPathLength.ToString() + " LU");
                 }
             }
         }
 
-        public void Start(int maxLoopCount, bool useRandomBounds)
+        public void Start(int maxLoopCount, bool useRandomBounds, double checkRate)
         {
             Random rand = new Random();
             double minPathLength = double.MaxValue;
             int[] currentSequence = _startPermutation.ToArray();
 
-            int endBoundOuterLoop = _startPermutation.Length - 1;
-            int endBoundInnerLoop = _startPermutation.Length;
-
-            if (useRandomBounds)
-            {
-                endBoundOuterLoop = rand.Next(_startPermutation.Length - 1);
-                endBoundInnerLoop = rand.Next(endBoundOuterLoop + 1, _startPermutation.Length);
-            }
-
             while (maxLoopCount-- > 0)
             {
-                for (int i = 0; i < endBoundOuterLoop; i++)
+                for (int i = 0; i < _startPermutation.Length - 1; i++)
                 {
-                    for (int k = i + 1; k < endBoundInnerLoop; k++)
+                    for (int k = i + 1; k < _startPermutation.Length; k++)
                     {
+                        if (useRandomBounds && rand.NextDouble() > checkRate)
+                            continue;
+
                         var nextSequence = Helper.TwoOptSwap(currentSequence, i, k);
                         double curMin = _euclideanPath.GetPathLength(nextSequence, true);
 

@@ -15,8 +15,8 @@ namespace TspOptimizer
         private int[] _minTour;
         private Random _random;
         private Action<double> _action;
-        private bool _useBigValleySearch;
         private PartiallyMappedCrossover _partiallyMappedCrossover;
+        private CancellationToken _token;
 
         public int[] MinTour
         {
@@ -49,6 +49,8 @@ namespace TspOptimizer
 
         public override void Start(CancellationToken token, Action<double> action)
         {
+            _token = token;
+
             if (_config.UseBigValleySearch)
                 OptimizerInfo.OnNext("Starting Genetic Optimizer with Big-Valley-Search");
             else
@@ -60,6 +62,9 @@ namespace TspOptimizer
             int[,] chromosomePool = new int[_population, _number];
 
             SetPopulationPool(chromosomePool, distances);
+
+            if(!token.IsCancellationRequested)
+                OptimizerInfo.OnNext("Starting genetic optimization");
 
             while (!token.IsCancellationRequested)
             {
@@ -199,6 +204,9 @@ namespace TspOptimizer
                     }
                 }
             }
+
+            _optimalSequence.OnCompleted();
+            OptimizerInfo.OnNext("Genetic optimization terminated with distance: " + MinDistance.ToString() + " LU");
         }
 
         private void SetPopulationPool(int[,] chromosomePool, double[] distances)
@@ -207,38 +215,55 @@ namespace TspOptimizer
             {
                 Tuple<double, int[]>[] randomSequences = new Tuple<double, int[]>[_population];
 
+                ParallelOptions parallelOptions = new ParallelOptions
+                {
+                    CancellationToken = _token,
+                    MaxDegreeOfParallelism = _config.NumberOfCores
+                };
+
                 int count = 0;
-                Parallel.For(0, _population, i =>
+
+                try
                 {
-                    int[] sequence = Enumerable.Range(0, _number).ToArray();
-                    Helper.Shuffle(sequence);
-
-                    var twoOptOptimizer = new LocalTwoOptOptimizer(sequence, _euclideanPath, _config);
-                    twoOptOptimizer.Start(1, true);
-
-                    var distance = _euclideanPath.GetPathLength(twoOptOptimizer.OptimalSequence, true);
-                    randomSequences[i] = new Tuple<double, int[]>(distance, twoOptOptimizer.OptimalSequence);
-
-                    count++;
-                    if (count % 10 == 0)
+                    Parallel.For(0, _population, parallelOptions, i =>
                     {
-                        OptimizerInfo.OnNext("Progress Big-Valley-Search: " + Math.Round(count / (double)_population * 100d, 2).ToString() + "%");
+                        int[] sequence = Enumerable.Range(0, _number).ToArray();
+                        Helper.Shuffle(sequence);
+
+                        var twoOptOptimizer = new LocalTwoOptOptimizer(sequence, _euclideanPath, _config);
+                        twoOptOptimizer.Start(1, true, _config.BigValleySearchRate);
+
+                        var distance = _euclideanPath.GetPathLength(twoOptOptimizer.OptimalSequence, true);
+                        randomSequences[i] = new Tuple<double, int[]>(distance, twoOptOptimizer.OptimalSequence);
+
+                        if (count++ % 10 == 0)
+                        {
+                            OptimizerInfo.OnNext("Progress Big-Valley-Search: " +
+                                                 Math.Round(count / (double)_population * 100d, 2).ToString() + "%");
+                        }
+                    });
+
+                    var orderedSequences = randomSequences.OrderBy(tuple => tuple.Item1).ToArray();
+
+                    for (int p = 0; p < _population; p++)
+                    {
+                        distances[p] = orderedSequences[p].Item1;
+                        int[] sequence = orderedSequences[p].Item2;
+
+                        for (int n = 0; n < _number; n++)
+                            chromosomePool[p, n] = sequence[n];
                     }
-                });
 
-                var orderedSequences = randomSequences.OrderBy(tuple => tuple.Item1).ToArray();
-
-                for (int p = 0; p < _population; p++)
+                    MinTour = orderedSequences.First().Item2.ToArray();
+                    MinDistance = orderedSequences.First().Item1;
+                }
+                catch (OperationCanceledException)
                 {
-                    distances[p] = orderedSequences[p].Item1;
-                    int[] sequence = orderedSequences[p].Item2;
-
-                    for (int n = 0; n < _number; n++)
-                        chromosomePool[p, n] = sequence[n];
+                    OptimizerInfo.OnNext("Big-Valley-Search canceled");
                 }
 
-                MinTour = orderedSequences.First().Item2.ToArray();
-                MinDistance = orderedSequences.First().Item1;
+                if(!_token.IsCancellationRequested)
+                    OptimizerInfo.OnNext("Big-Valley-Search completed");
             }
             else
             {
@@ -261,6 +286,9 @@ namespace TspOptimizer
                     }
                 }
             }
+
+            if (!_token.IsCancellationRequested)
+                OptimizerInfo.OnNext("Population initialized");
         }
 
         private int[] DoMutation(int[] currentSequence)

@@ -17,6 +17,8 @@ namespace TspOptimizer
 
         public override void Start(CancellationToken token, Action<double> action)
         {
+            OptimizerInfo.OnNext("Starting SA Optimizer with cooling rate: " + _config.CoolingRate.ToString());
+
             Random rand = new Random();
             double minPathLength = double.MaxValue;
             double curPathLength = double.MaxValue;
@@ -63,6 +65,7 @@ namespace TspOptimizer
             }
 
             _optimalSequence.OnCompleted();
+            OptimizerInfo.OnNext("Terminated SA Optimizer with distance: " + minPathLength.ToString() + " LU");
         }
 
         private double GetProbability(double difference, double temperature)

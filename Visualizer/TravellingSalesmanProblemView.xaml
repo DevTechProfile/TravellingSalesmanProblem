@@ -19,9 +19,9 @@
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="60" />
-                <RowDefinition Height="190" />
+                <RowDefinition Height="160" />
                 <RowDefinition Height="100" />
-                <RowDefinition Height="190" />
+                <RowDefinition Height="230" />
                 <RowDefinition Height="1*" />
             </Grid.RowDefinitions>
             <Label Grid.Row="0" Margin="10 10 0 0" HorizontalAlignment="Left" DockPanel.Dock="Top" Content="Optimizer Configuration" FontSize="20"></Label>
@@ -64,6 +64,7 @@
                         <RowDefinition Height="1*" />
                         <RowDefinition Height="1*" />
                         <RowDefinition Height="1*" />
+                        <RowDefinition Height="1*" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"/>
@@ -73,9 +74,10 @@
                     <CheckBox HorizontalAlignment="Left" Grid.Row="0" Grid.Column="1" Width="30" Height="30" IsChecked="{Binding UseBigValleySearch}"></CheckBox>
                     <Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Content="Population size" HorizontalAlignment="Left" Margin="0,6.667" Width="185"></Label>
                     <TextBox HorizontalAlignment="Left" Grid.Row="1" Width="Auto" Height="25" Text="{Binding PopulationSize}" VerticalAlignment="Bottom" Grid.ColumnSpan="2" Margin="185,0,0,7.667"/>
-
                     <Label Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Content="Crossover rate"></Label>
                     <TextBox HorizontalAlignment="Left" Grid.Row="2" Width="Auto" Height="25" Text="{Binding CrossoverRate}" VerticalAlignment="Bottom" Grid.ColumnSpan="2" Margin="185,0,0,8"/>
+                    <Label Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Content="Big-Valley-Search rate"></Label>
+                    <TextBox HorizontalAlignment="Left" Grid.Row="3" Width="Auto" Height="25" Text="{Binding BigValleySearchRate}" VerticalAlignment="Bottom" Grid.ColumnSpan="2" Margin="185,0,0,8"/>
                 </Grid>
             </GroupBox>
             <Grid Grid.Row="4">
