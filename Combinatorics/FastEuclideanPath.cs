@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Linq;
-using System.Numerics;
 using System.Windows;
 
 namespace Combinatorics
 {
-    /// <summary>
-    /// Path calculation with SIMD support
-    /// </summary>
     public class FastEuclideanPath : EuclideanPathBase
     {
         private float[] _distanceArray;
@@ -29,28 +24,19 @@ namespace Combinatorics
 
         public override double GetPathLength(int[] sequence, bool closedPath)
         {
-            float[] currentDistanceArray = new float[_numberOfPoints - 1];
-
+            float pathLength = 0f;
             for (int i = 0; i < sequence.Length - 1; i++)
             {
-                currentDistanceArray[i] = GetDistanceFloat(sequence[i], sequence[i + 1]);
+                pathLength += GetDistanceFloat(sequence[i], sequence[i + 1]);
             }
-
-            var sums = Vector<float>.Zero;
-            var simdLength = Vector<float>.Count;
-            for (int i = 0; i < currentDistanceArray.Length; i += simdLength)
-                sums += new Vector<float>(currentDistanceArray, i);
-            float sum = 0f;
-            for (int i = 0; i < simdLength; i++)
-                sum += sums[i];
 
             // closed hamiltonian path
             if (closedPath)
             {
-                sum += GetDistanceFloat(sequence.First(), sequence.Last());
+                pathLength += GetDistanceFloat(sequence[0], sequence[_numberOfPoints - 1]);
             }
 
-            return sum;
+            return pathLength;
         }
 
         public override double GetSubPathLength(int[] sequence, int maxIndex)

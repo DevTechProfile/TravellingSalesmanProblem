@@ -6,7 +6,7 @@ namespace TspOptimizer
 {
     public class GridLocalOptimizer : TspOptimizerBase
     {
-        public GridLocalOptimizer(int[] startPermutation, EuclideanPath euclideanPath, OptimizerConfig config)
+        public GridLocalOptimizer(int[] startPermutation, IEuclideanPath euclideanPath, OptimizerConfig config)
             : base(startPermutation, euclideanPath, config)
         {
         }

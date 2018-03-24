@@ -209,7 +209,7 @@ namespace Visualizer
             }
 
             _initialPath = path.Select(coordinate => coordinate.To2DPoint()).ToArray();
-            _euclideanPath = new EuclideanPath(_initialPath);
+            _euclideanPath = new FastEuclideanPath(_initialPath);
             _shuffledTour = Enumerable.Range(0, _initialPath.Length).ToArray();
 
             PlotTour(Enumerable.Range(0, _initialPath.Length).ToArray());

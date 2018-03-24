@@ -32,7 +32,7 @@ namespace Combinatorics.Test
             double distanceFast = euclideanPath.GetPathLength(sequence, true);
             fastStopwatch.Stop();
 
-            Assert.IsTrue(Math.Abs(distanceStandard - distanceFast) < 1E-04);
+            Assert.IsTrue(Math.Abs(distanceStandard - distanceFast) < 1E-06);
 
             Console.WriteLine("Ticks standard: " + standardStopwatch.ElapsedTicks.ToString());
             Console.WriteLine("Ticks fast: " + fastStopwatch.ElapsedTicks.ToString());
