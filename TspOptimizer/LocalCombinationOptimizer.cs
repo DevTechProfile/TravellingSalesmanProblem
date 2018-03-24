@@ -7,7 +7,7 @@ namespace TspOptimizer
 {
     public class LocalCombinationOptimizer : TspOptimizerBase
     {
-        public LocalCombinationOptimizer(int[] startPermutation, EuclideanPath euclideanPath, OptimizerConfig config)
+        public LocalCombinationOptimizer(int[] startPermutation, IEuclideanPath euclideanPath, OptimizerConfig config)
             : base(startPermutation, euclideanPath, config)
         {
         }

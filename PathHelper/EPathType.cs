@@ -13,16 +13,6 @@
         Normal2DRandom,
 
         /// <summary>
-        /// Uniform distributed 3D point cloud
-        /// </summary>
-        Uniform3DRandom,
-
-        /// <summary>
-        /// Normal distributed 3D point cloud
-        /// </summary>
-        Normal3DRandom,
-
-        /// <summary>
         /// Circle path
         /// </summary>
         Circle,

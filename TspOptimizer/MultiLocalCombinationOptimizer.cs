@@ -12,7 +12,7 @@ namespace TspOptimizer
         ITspOptimizer[] _optimizerSet;
         double _globalMinimum;
 
-        public MultiLocalCombinationOptimizer(int[] startPermutation, EuclideanPath euclideanPath, OptimizerConfig config)
+        public MultiLocalCombinationOptimizer(int[] startPermutation, IEuclideanPath euclideanPath, OptimizerConfig config)
             : base(startPermutation, euclideanPath, config)
         {
             _globalMinimum = double.MaxValue;

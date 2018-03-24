@@ -21,10 +21,10 @@ namespace Visualizer
         const string _intialNumberOfPointsString = "200";
 
         private List<Point> _currentPath;
-        private List<Point> _initialPath;
+        private Point[] _initialPath;
         private string _plotTitle;
         private int[] _shuffledTour;
-        private EuclideanPath _euclideanPath;
+        private IEuclideanPath _euclideanPath;
         private string _info;
         private CancellationTokenSource _tokenSource;
         private TspOptimizerAlgorithm _selectedOptimizer;
@@ -208,11 +208,11 @@ namespace Visualizer
                 return;
             }
 
-            _initialPath = path.Select(coordinate => coordinate.To2DPoint()).ToList();
+            _initialPath = path.Select(coordinate => coordinate.To2DPoint()).ToArray();
             _euclideanPath = new EuclideanPath(_initialPath);
-            _shuffledTour = Enumerable.Range(0, _initialPath.Count).ToArray();
+            _shuffledTour = Enumerable.Range(0, _initialPath.Length).ToArray();
 
-            PlotTour(Enumerable.Range(0, _initialPath.Count).ToArray());
+            PlotTour(Enumerable.Range(0, _initialPath.Length).ToArray());
         }
 
         private void UpdateInfo(string entry)
@@ -251,7 +251,7 @@ namespace Visualizer
 
         private void OnShufflePath()
         {
-            _shuffledTour = Enumerable.Range(0, _initialPath.Count).ToArray();
+            _shuffledTour = Enumerable.Range(0, _initialPath.Length).ToArray();
             Helper.Shuffle(_shuffledTour);
             PlotTour(_shuffledTour);
         }

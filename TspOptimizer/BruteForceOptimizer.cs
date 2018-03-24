@@ -9,7 +9,7 @@ namespace TspOptimizer
     {
         private long _permutationCount;
 
-        public BruteForceOptimizer(int[] startPermutation, EuclideanPath euclideanPath, OptimizerConfig config)
+        public BruteForceOptimizer(int[] startPermutation, IEuclideanPath euclideanPath, OptimizerConfig config)
             : base(startPermutation, euclideanPath, config)
         {
             _permutationCount = Enumerable.Range(1, _startPermutation.Length).Aggregate(1, (acc, val) => acc * val);

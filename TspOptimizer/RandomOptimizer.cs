@@ -8,7 +8,7 @@ namespace TspOptimizer
 {
     public class RandomOptimizer : TspOptimizerBase
     {
-        public RandomOptimizer(int[] startPermutation, EuclideanPath euclideanPath, OptimizerConfig config)
+        public RandomOptimizer(int[] startPermutation, IEuclideanPath euclideanPath, OptimizerConfig config)
             : base(startPermutation, euclideanPath, config)
         {
         }

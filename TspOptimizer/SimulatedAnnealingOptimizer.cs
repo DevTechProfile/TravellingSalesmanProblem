@@ -9,7 +9,7 @@ namespace TspOptimizer
     {
         private double _coolingRate;
 
-        public SimulatedAnnealingOptimizer(int[] startPermutation, EuclideanPath euclideanPath, OptimizerConfig config)
+        public SimulatedAnnealingOptimizer(int[] startPermutation, IEuclideanPath euclideanPath, OptimizerConfig config)
             : base(startPermutation, euclideanPath, config)
         {
             _coolingRate = _config.CoolingRate;

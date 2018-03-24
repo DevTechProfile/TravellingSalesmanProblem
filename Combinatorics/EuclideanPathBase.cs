@@ -1,0 +1,22 @@
+﻿using System.Windows;
+
+namespace Combinatorics
+{
+    public abstract class EuclideanPathBase : IEuclideanPath
+    {
+        protected int _numberOfPoints;
+
+        public EuclideanPathBase(Point[] points)
+        {
+            _numberOfPoints = points.Length;
+        }
+
+        public abstract double GetAveragedeDistance();
+
+        public abstract double GetDistance(int i, int j);
+
+        public abstract double GetPathLength(int[] sequence, bool closedPath);
+
+        public abstract double GetSubPathLength(int[] sequence, int maxIndex);
+    }
+}

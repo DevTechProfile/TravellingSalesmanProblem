@@ -17,12 +17,6 @@ Uniform distributed 2D data
 ## Normal2DRandom
 Normal distributed 2D data
 
-## Uniform3DRandom
-Uniform distributed 3D data (not yet implemented)
-
-## Normal3DRandom
-Normal distributed 3D data (not yet implemented)
-
 ## Circle
 Circle shaped test data. Easy to see global optimum.
 

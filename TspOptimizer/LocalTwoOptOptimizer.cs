@@ -10,7 +10,7 @@ namespace TspOptimizer
     {
         public int[] OptimalSequence { get; private set; }
 
-        public LocalTwoOptOptimizer(int[] startPermutation, EuclideanPath euclideanPath, OptimizerConfig config)
+        public LocalTwoOptOptimizer(int[] startPermutation, IEuclideanPath euclideanPath, OptimizerConfig config)
             : base(startPermutation, euclideanPath, config)
         {
             OptimalSequence = _startPermutation.ToArray();

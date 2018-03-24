@@ -35,7 +35,7 @@ namespace TspOptimizer
             }
         }
 
-        public GeneticOptimizer(int[] startPermutation, EuclideanPath euclideanPath, OptimizerConfig config)
+        public GeneticOptimizer(int[] startPermutation, IEuclideanPath euclideanPath, OptimizerConfig config)
             : base(startPermutation, euclideanPath, config)
         {
             _rate = _config.CrossoverRate;

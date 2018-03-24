@@ -13,7 +13,7 @@ namespace TspOptimizer
         /// <param name="euclideanPath"></param>
         /// <returns></returns>
         public static ITspOptimizer Create(TspOptimizerAlgorithm tspOptimizerAlgorithm,
-                                           int[] startSequence, EuclideanPath euclideanPath,
+                                           int[] startSequence, IEuclideanPath euclideanPath,
                                            OptimizerConfig config)
         {
             ITspOptimizer tspOptimizer = null;
@@ -43,7 +43,7 @@ namespace TspOptimizer
                 case TspOptimizerAlgorithm.GeneticOptimizer:
                     tspOptimizer = new GeneticOptimizer(startSequence, euclideanPath, config);
                     break;
-                case TspOptimizerAlgorithm.GridLocalBruteForceOptimizer:
+                case TspOptimizerAlgorithm.GridLocalOptimizer:
                     break;
                 default:
                     throw new ArgumentException("Unknown optimizer");

@@ -69,6 +69,7 @@
     <Compile Include="CollectionExtensions.cs" />
     <Compile Include="ETspOptimizer.cs" />
     <Compile Include="GeneticOptimizer.cs" />
+    <Compile Include="GridLocalOptimizer.cs" />
     <Compile Include="ITspOptimizer.cs" />
     <Compile Include="LocalCombinationOptimizer.cs" />
     <Compile Include="LocalTwoOptOptimizer.cs" />
