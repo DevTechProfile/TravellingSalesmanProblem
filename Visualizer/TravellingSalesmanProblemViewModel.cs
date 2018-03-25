@@ -18,7 +18,7 @@ namespace Visualizer
 {
     public class TravellingSalesmanProblemViewModel : BindableBase
     {
-        const string _intialNumberOfPointsString = "200";
+        const string _intialNumberOfPointsString = "120";
 
         private List<Point> _currentPath;
         private Point[] _initialPath;
@@ -180,7 +180,7 @@ namespace Visualizer
             ShufflePathCommand = new DelegateCommand(OnShufflePath);
             PathTypeChangedCommand = new DelegateCommand(OnPathTypeChanged);
 
-            SelectedPathType = TspPathType.BigValleyRandom;
+            SelectedPathType = TspPathType.Uniform2DRandom;
             SelectedOptimizer = TspOptimizerAlgorithm.GeneticOptimizer;
             NumberOfPoints = _intialNumberOfPointsString;
             StartButtonEnable = true;
@@ -193,7 +193,7 @@ namespace Visualizer
             UseBigValleySearch = true;
             PopulationSize = "500";
             CrossoverRate = "0.1";
-            NumberOfCores = "16";
+            NumberOfCores = "4";
             BigValleySearchRate = "0.2";
         }
 

@@ -63,7 +63,7 @@ namespace TspOptimizer
 
             SetPopulationPool(chromosomePool, distances);
 
-            if(!token.IsCancellationRequested)
+            if (!token.IsCancellationRequested)
                 OptimizerInfo.OnNext("Starting genetic optimization");
 
             while (!token.IsCancellationRequested)
@@ -233,7 +233,7 @@ namespace TspOptimizer
                         var twoOptOptimizer = new LocalTwoOptOptimizer(sequence, _euclideanPath, _config);
                         twoOptOptimizer.Start(1, true, _config.BigValleySearchRate);
 
-                        var distance = _euclideanPath.GetPathLength(twoOptOptimizer.OptimalSequence, true);
+                        var distance = _euclideanPath.GetPathLength(twoOptOptimizer.OptimalSequence, ClosedPath);
                         randomSequences[i] = new Tuple<double, int[]>(distance, twoOptOptimizer.OptimalSequence);
 
                         if (count++ % 10 == 0)
@@ -262,7 +262,7 @@ namespace TspOptimizer
                     OptimizerInfo.OnNext("Big-Valley-Search canceled");
                 }
 
-                if(!_token.IsCancellationRequested)
+                if (!_token.IsCancellationRequested)
                     OptimizerInfo.OnNext("Big-Valley-Search completed");
             }
             else
@@ -306,7 +306,7 @@ namespace TspOptimizer
 
         private double TourDistance(int[] city)
         {
-            return _euclideanPath.GetPathLength(city, true);
+            return _euclideanPath.GetPathLength(city, ClosedPath);
         }
     }
 }

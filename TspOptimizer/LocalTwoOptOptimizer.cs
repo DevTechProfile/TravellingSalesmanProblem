@@ -1,6 +1,9 @@
 ﻿using Combinatorics;
 using System;
 using System.Linq;
+using System.Reactive.Concurrency;
+using System.Reactive.Linq;
+using System.Reactive.Subjects;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -8,12 +11,20 @@ namespace TspOptimizer
 {
     public class LocalTwoOptOptimizer : TspOptimizerBase
     {
+        private Subject<int[]> _downSampledOptSequence;
+        private IDisposable _disposeStream;
+
         public int[] OptimalSequence { get; private set; }
 
         public LocalTwoOptOptimizer(int[] startPermutation, IEuclideanPath euclideanPath, OptimizerConfig config)
             : base(startPermutation, euclideanPath, config)
         {
             OptimalSequence = _startPermutation.ToArray();
+            _downSampledOptSequence = new Subject<int[]>();
+            _disposeStream = Observable.Interval(TimeSpan.FromMilliseconds(100))
+                                       .ObserveOn(Scheduler.Default)
+                                       .CombineWithLatest(_downSampledOptSequence, (time, seq) => seq)
+                                       .Subscribe(seq => _optimalSequence.OnNext(seq));
         }
 
         public override void Start(CancellationToken token, Action<double> action)
@@ -48,14 +59,14 @@ namespace TspOptimizer
                             }
 
                             var nextSequence = Helper.TwoOptSwap(currentSequence, i, k);
-                            double curMin = _euclideanPath.GetPathLength(nextSequence, true);
+                            double curMin = _euclideanPath.GetPathLength(nextSequence, ClosedPath);
 
                             if (curMin < minPathLength)
                             {
                                 currentSequence = nextSequence.ToArray();
                                 minPathLength = curMin;
                                 action?.Invoke(minPathLength);
-                                _optimalSequence.OnNext(currentSequence);
+                                _downSampledOptSequence.OnNext(currentSequence);
                             }
                         }
                     });
@@ -63,6 +74,7 @@ namespace TspOptimizer
                 catch (OperationCanceledException)
                 {
                     _optimalSequence.OnCompleted();
+                    _disposeStream?.Dispose();
                     OptimizerInfo.OnNext("Terminated 2-opt Optimizer with distance: " + minPathLength.ToString() + " LU");
                 }
             }
@@ -84,7 +96,7 @@ namespace TspOptimizer
                             continue;
 
                         var nextSequence = Helper.TwoOptSwap(currentSequence, i, k);
-                        double curMin = _euclideanPath.GetPathLength(nextSequence, true);
+                        double curMin = _euclideanPath.GetPathLength(nextSequence, ClosedPath);
 
                         if (curMin < minPathLength)
                         {

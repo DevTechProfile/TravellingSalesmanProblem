@@ -33,6 +33,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Reactive.Core, Version=3.0.1000.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Reactive.Core.3.1.1\lib\net45\System.Reactive.Core.dll</HintPath>
       <Private>True</Private>
@@ -53,6 +54,7 @@
       <HintPath>..\packages\System.Reactive.Windows.Threading.3.1.1\lib\net45\System.Reactive.Windows.Threading.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Windows" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -69,15 +71,19 @@
     <Compile Include="CollectionExtensions.cs" />
     <Compile Include="ETspOptimizer.cs" />
     <Compile Include="GeneticOptimizer.cs" />
+    <Compile Include="GridCell.cs" />
     <Compile Include="GridLocalOptimizer.cs" />
     <Compile Include="ITspOptimizer.cs" />
     <Compile Include="LocalCombinationOptimizer.cs" />
     <Compile Include="LocalTwoOptOptimizer.cs" />
     <Compile Include="MultiLocalCombinationOptimizer.cs" />
+    <Compile Include="ObservableExtensions.cs" />
     <Compile Include="OffSpringPair.cs" />
     <Compile Include="OptimizerConfig.cs" />
     <Compile Include="ParentPair.cs" />
     <Compile Include="PartiallyMappedCrossover.cs" />
+    <Compile Include="RectDecompensition.cs" />
+    <Compile Include="RectExtension.cs" />
     <Compile Include="SimulatedAnnealingOptimizer.cs" />
     <Compile Include="TspOptimizerBase.cs" />
     <Compile Include="RandomOptimizer.cs" />

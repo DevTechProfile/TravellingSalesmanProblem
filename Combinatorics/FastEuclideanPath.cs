@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 using System.Windows;
 
 namespace Combinatorics
@@ -24,6 +25,22 @@ namespace Combinatorics
 
         public override double GetPathLength(int[] sequence, bool closedPath)
         {
+            //float pathLength = 0f;
+
+            //unsafe
+            //{
+            //    fixed (int* seqpointer = sequence)
+            //    {
+            //        int* element = seqpointer;
+            //        var remaining = sequence.Length - 1;
+            //        while (remaining-- > 0)
+            //        {
+            //            pathLength += *element;
+            //            element++;
+            //        }
+            //    }
+            //}
+
             float pathLength = 0f;
             for (int i = 0; i < sequence.Length - 1; i++)
             {

@@ -35,7 +35,7 @@ namespace TspOptimizer
                     }
 
                     Helper.SwapPositions(currentSequence, indexEnumerator.CurrentCombination.Elements);
-                    var currentPathLength = _euclideanPath.GetPathLength(currentSequence, true);
+                    var currentPathLength = _euclideanPath.GetPathLength(currentSequence, ClosedPath);
 
                     if (currentPathLength < minPathLength)
                     {

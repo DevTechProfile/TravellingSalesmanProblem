@@ -44,7 +44,7 @@ namespace TspOptimizer
 
                 var nextSequence = Helper.TwoOptSwap(currentSequence, cp1, cp2);
 
-                double nextPathLength = _euclideanPath.GetPathLength(nextSequence, true);
+                double nextPathLength = _euclideanPath.GetPathLength(nextSequence, ClosedPath);
                 double difference = nextPathLength - curPathLength;
                 curPathLength = nextPathLength;
 

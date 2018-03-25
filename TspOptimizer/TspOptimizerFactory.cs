@@ -43,8 +43,6 @@ namespace TspOptimizer
                 case TspOptimizerAlgorithm.GeneticOptimizer:
                     tspOptimizer = new GeneticOptimizer(startSequence, euclideanPath, config);
                     break;
-                case TspOptimizerAlgorithm.GridLocalOptimizer:
-                    break;
                 default:
                     throw new ArgumentException("Unknown optimizer");
             }

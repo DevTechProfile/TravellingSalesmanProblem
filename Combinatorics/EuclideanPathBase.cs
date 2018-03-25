@@ -4,12 +4,16 @@ namespace Combinatorics
 {
     public abstract class EuclideanPathBase : IEuclideanPath
     {
+        private Point[] _points;
         protected int _numberOfPoints;
 
         public EuclideanPathBase(Point[] points)
         {
+            _points = points;
             _numberOfPoints = points.Length;
         }
+
+        public Point[] Points => _points;
 
         public abstract double GetAveragedeDistance();
 

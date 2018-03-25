@@ -9,7 +9,6 @@
         BruteForceOptimizer,
         BranchAndBoundOptimizer,
         SimulatedAnnealingOptimizer,
-        GeneticOptimizer,
-        GridLocalOptimizer
+        GeneticOptimizer
     }
 }

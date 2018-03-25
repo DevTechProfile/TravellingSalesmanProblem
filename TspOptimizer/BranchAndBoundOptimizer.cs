@@ -28,9 +28,28 @@ namespace TspOptimizer
 
             var preOptimalSequence = preOptimizer.OptimalSequence;
             _optimalSequence.OnNext(preOptimalSequence.ToArray());
-            _minPathLength = _euclideanPath.GetPathLength(preOptimalSequence, true);
+            _minPathLength = _euclideanPath.GetPathLength(preOptimalSequence, ClosedPath);
             action?.Invoke(_minPathLength);
             Permute(_startPermutation, 0, _startPermutation.Length - 1);
+
+            _optimalSequence.OnCompleted();
+        }
+
+        public void Start(CancellationToken token, Action<double> action, int startIndex, int endIndex)
+        {
+            _token = token;
+            _action = action;
+
+            // Do pre optimization -> early cuts in branches
+            var preOptimizer = new LocalTwoOptOptimizer(_startPermutation, _euclideanPath, _config);
+            preOptimizer.ClosedPath = ClosedPath;
+            preOptimizer.Start(1, false, 1);
+
+            var preOptimalSequence = preOptimizer.OptimalSequence;
+            _optimalSequence.OnNext(preOptimalSequence.ToArray());
+            _minPathLength = _euclideanPath.GetPathLength(preOptimalSequence, ClosedPath);
+            action?.Invoke(_minPathLength);
+            Permute(_startPermutation, startIndex, endIndex);
 
             _optimalSequence.OnCompleted();
         }
@@ -50,7 +69,7 @@ namespace TspOptimizer
 
             if (i == endIndex)
             {
-                var currentMinValue = _euclideanPath.GetPathLength(currentPermutation, true);
+                var currentMinValue = _euclideanPath.GetPathLength(currentPermutation, ClosedPath);
 
                 if (_minPathLength.CompareTo(currentMinValue) > 0)
                 {

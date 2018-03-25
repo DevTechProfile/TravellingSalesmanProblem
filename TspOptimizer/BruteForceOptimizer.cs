@@ -30,7 +30,7 @@ namespace TspOptimizer
                 }
 
                 var curPermuation = permutationEnumerator.CurrentPermutation.Elements;
-                double curMin = _euclideanPath.GetPathLength(curPermuation, true);
+                double curMin = _euclideanPath.GetPathLength(curPermuation, ClosedPath);
 
                 if (curMin < minPathLength)
                 {
