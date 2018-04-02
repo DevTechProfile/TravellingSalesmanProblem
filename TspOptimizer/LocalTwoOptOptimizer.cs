@@ -31,7 +31,6 @@ namespace TspOptimizer
         {
             OptimizerInfo.OnNext("Starting 2-opt Optimizer");
 
-            Random rand = new Random();
             double minPathLength = double.MaxValue;
             int[] currentSequence = _startPermutation.ToArray();
 
