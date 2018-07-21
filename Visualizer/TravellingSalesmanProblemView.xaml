@@ -99,7 +99,7 @@
             </StackPanel>
             <Label VerticalAlignment="Center" Width="150" HorizontalAlignment="Right" FontSize="12" Content="{Binding Path=PathLength}" Grid.Row="0"></Label>
             <oxy:Plot Title="{Binding PlotTitle}" Grid.Row="1">
-                <oxy:LineSeries Color="Beige" MarkerFill="Aquamarine" MarkerType="Circle" ItemsSource="{Binding Path=CurrentPath}" DataFieldX="X" DataFieldY="Y" />
+                <oxy:LineSeries Color="Chocolate" MarkerFill="Black" MarkerType="Circle" ItemsSource="{Binding Path=CurrentPath}" DataFieldX="X" DataFieldY="Y" />
             </oxy:Plot>
             <Grid Grid.Row="2">
                 <Button IsEnabled="{Binding StartButtonEnable}" Margin="20 0 0 0" Width="80" Height="40" HorizontalAlignment="Left" Content="Start" Command="{Binding StartPathOptimizationCommand}" />
